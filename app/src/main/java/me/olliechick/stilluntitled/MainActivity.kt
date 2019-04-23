@@ -1,9 +1,11 @@
 package me.olliechick.stilluntitled
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,10 +19,14 @@ class MainActivity : AppCompatActivity() {
 
         // set on-click listeners
         playButton.setOnClickListener {
-            Toast.makeText(this@MainActivity, "TODO: Load game instance.", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, GameActivity::class.java)
+            startActivity(intent)
         }
         helpButton.setOnClickListener {
-            Toast.makeText(this@MainActivity, "TODO: Load help.", Toast.LENGTH_SHORT).show()
+            //TODO: Link to actual help page rather than Google
+            val uri = Uri.parse("http://www.google.com")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
         }
     }
 }
