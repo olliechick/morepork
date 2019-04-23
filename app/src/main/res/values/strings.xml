@@ -2,4 +2,8 @@
     <string name="app_name">Morepork</string>
     <string name="play">Play</string>
     <string name="help">Tutorial</string>
+    <string name="theme">Theme:</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="difficulty">Difficulty:</string>
 </resources>
