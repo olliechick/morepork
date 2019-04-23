@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">StillUntitled</string>
+    <string name="app_name">Morepork</string>
+    <string name="play">Play</string>
+    <string name="help">Tutorial</string>
 </resources>
