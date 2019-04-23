@@ -6,4 +6,9 @@
     <string name="light">Light</string>
     <string name="dark">Dark</string>
     <string name="difficulty">Difficulty:</string>
+    <string name="home">Home</string>
+    <string name="play_again">Play Again</string>
+    <string name="high_score">High Score:</string>
+    <string name="zero_score">0</string>
+    <string name="your_score">Your Score:</string>
 </resources>
