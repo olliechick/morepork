@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="me.olliechick.stilluntitled">
+          package="me.olliechick.morepork">
 
     <application
             android:allowBackup="true"
@@ -9,16 +9,16 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".GameOverActivity"
+        <activity android:name="me.olliechick.morepork.GameOverActivity"
                   android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
-        <activity android:name=".SettingsActivity">
+        <activity android:name="me.olliechick.morepork.SettingsActivity">
         </activity>
         <activity
-                android:name=".GameActivity"
+                android:name="me.olliechick.morepork.GameActivity"
                 android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name="me.olliechick.morepork.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
