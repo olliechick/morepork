@@ -9,5 +9,4 @@
         android:icon="@drawable/ic_settings_white_24dp"
         android:visible="false"
         app:showAsAction="ifRoom" />
-    <!--android:icon="@drawable/settings_48dp" todo get an icon-->
 </menu>
