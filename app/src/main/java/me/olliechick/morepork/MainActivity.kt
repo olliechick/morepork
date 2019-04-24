@@ -25,8 +25,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         helpButton.setOnClickListener {
-            //TODO: Link to actual help page rather than Google
-            val uri = Uri.parse("http://www.google.com")
+            val uri = Uri.parse(Util.helpUrl)
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
