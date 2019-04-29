@@ -10,6 +10,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorManager
 import android.hardware.Sensor
 import android.hardware.SensorEventListener
+import android.os.Handler
 import androidx.core.app.ActivityCompat
 import android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 import android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -72,6 +73,18 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
         } else {
             soundMeter!!.start()
         }
+
+        val handler = Handler()
+        val delay = (100).toLong() //milliseconds
+
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                //do something
+                Toast.makeText(applicationContext, "sound level = ${soundMeter?.amplitude}", Toast.LENGTH_SHORT)
+                    .show()
+                handler.postDelayed(this, delay)
+            }
+        }, delay)
     }
 
     override fun onPause() {
