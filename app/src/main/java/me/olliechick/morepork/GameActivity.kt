@@ -86,14 +86,8 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
 //                Toast.makeText(applicationContext, "sound level = ${soundMeter?.amplitude}", Toast.LENGTH_SHORT)
 //                    .show()
                 if (soundLevel != null) {
-                    if (level == Level.MIDDLE && soundLevel > soundBarrier) {
-                        level = Level.TOP
-                        Toast.makeText(applicationContext, "top", Toast.LENGTH_SHORT).show()
-                    }
-                    else if (level == Level.TOP && soundLevel < soundBarrier) {
-                        level = Level.MIDDLE
-                        Toast.makeText(applicationContext, "middle", Toast.LENGTH_SHORT).show()
-                    }
+                    if (soundLevel > soundBarrier) loudNoise()
+                    else quietNoise()
                 }
                 handler.postDelayed(this, delay)
             }
@@ -108,20 +102,44 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onSensorChanged(event: SensorEvent) {
         if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
-            if (event.values[0] == event.sensor.maximumRange) {
-                //far
-                level = Level.MIDDLE
-                Toast.makeText(applicationContext, "middle", Toast.LENGTH_SHORT).show()
-//                Toast.makeText(applicationContext, "far (sound level = ${soundMeter?.amplitude})", Toast.LENGTH_SHORT)
-//                    .show()
-            } else {
-                //near
-                level = Level.TOP
-                Toast.makeText(applicationContext, "bottom", Toast.LENGTH_SHORT).show()
-//                Toast.makeText(applicationContext, "near (sound level = ${soundMeter?.amplitude})", Toast.LENGTH_SHORT)
-//                    .show()
-            }
+            if (event.values[0] == event.sensor.maximumRange) handRemoved()
+            else handCovered()
         }
+    }
+
+    fun handCovered() {
+        moveToBottom()
+    }
+
+    fun handRemoved() {
+        moveToMiddle()
+    }
+
+    fun loudNoise() {
+        if (level == Level.MIDDLE) {
+            moveToTop()
+        }
+    }
+
+    fun quietNoise() {
+        if (level == Level.TOP) {
+            moveToMiddle()
+        }
+    }
+
+    fun moveToTop() {
+        level = Level.TOP
+        Toast.makeText(applicationContext, "moving to top", Toast.LENGTH_SHORT).show()
+    }
+
+    fun moveToMiddle() {
+        level = Level.MIDDLE
+        Toast.makeText(applicationContext, "moving to middle", Toast.LENGTH_SHORT).show()
+    }
+
+    fun moveToBottom() {
+        level = Level.BOTTOM
+        Toast.makeText(applicationContext, "moving to bottom", Toast.LENGTH_SHORT).show()
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
