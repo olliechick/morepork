@@ -29,7 +29,7 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
     private var mProximity: Sensor? = null
     private var soundMeter: SoundMeter? = null
     private var permissionToRecordAccepted = false
-    private var level = 2
+    private var level = Level.MIDDLE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,12 +86,12 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
 //                Toast.makeText(applicationContext, "sound level = ${soundMeter?.amplitude}", Toast.LENGTH_SHORT)
 //                    .show()
                 if (soundLevel != null) {
-                    if (level == 2 && soundLevel > soundBarrier) {
-                        level = 1
+                    if (level == Level.MIDDLE && soundLevel > soundBarrier) {
+                        level = Level.TOP
                         Toast.makeText(applicationContext, "top", Toast.LENGTH_SHORT).show()
                     }
-                    else if (level == 1 && soundLevel < soundBarrier) {
-                        level = 2
+                    else if (level == Level.TOP && soundLevel < soundBarrier) {
+                        level = Level.MIDDLE
                         Toast.makeText(applicationContext, "middle", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -110,13 +110,13 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
         if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
             if (event.values[0] == event.sensor.maximumRange) {
                 //far
-                level = 2
+                level = Level.MIDDLE
                 Toast.makeText(applicationContext, "middle", Toast.LENGTH_SHORT).show()
 //                Toast.makeText(applicationContext, "far (sound level = ${soundMeter?.amplitude})", Toast.LENGTH_SHORT)
 //                    .show()
             } else {
                 //near
-                level = 3
+                level = Level.TOP
                 Toast.makeText(applicationContext, "bottom", Toast.LENGTH_SHORT).show()
 //                Toast.makeText(applicationContext, "near (sound level = ${soundMeter?.amplitude})", Toast.LENGTH_SHORT)
 //                    .show()
