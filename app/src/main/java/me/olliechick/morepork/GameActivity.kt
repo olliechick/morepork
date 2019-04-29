@@ -23,7 +23,8 @@ import android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 class GameActivity : AppCompatActivity(), SensorEventListener {
 
     private val REQUEST_RECORD_AUDIO_PERMISSION = 200
-    private val soundBarrier = 2000 //i dunno what the units are here todo find out?
+    private val SOUND_BARRIER = 2000 // how loud it has to be to move the avatar up
+    private val CHECK_FREQUENCY = 10 // times per second the audio level is sampled
 
     private var mSensorManager: SensorManager? = null
     private var mProximity: Sensor? = null
@@ -77,16 +78,14 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
         }
 
         val handler = Handler()
-        val delay = (100).toLong() //milliseconds
+        val delay = (1000/CHECK_FREQUENCY).toLong() //milliseconds
 
         handler.postDelayed(object : Runnable {
             override fun run() {
                 val soundLevel = soundMeter?.amplitude
-                //do something
-//                Toast.makeText(applicationContext, "sound level = ${soundMeter?.amplitude}", Toast.LENGTH_SHORT)
-//                    .show()
+//              Toast.makeText(applicationContext, "sound level = ${soundMeter?.amplitude}", Toast.LENGTH_SHORT).show()
                 if (soundLevel != null) {
-                    if (soundLevel > soundBarrier) loudNoise()
+                    if (soundLevel > SOUND_BARRIER) loudNoise()
                     else quietNoise()
                 }
                 handler.postDelayed(this, delay)
