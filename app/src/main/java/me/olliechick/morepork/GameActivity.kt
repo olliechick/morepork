@@ -19,9 +19,9 @@ import android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 
 
-private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
-
 class GameActivity : AppCompatActivity(), SensorEventListener {
+
+    private val REQUEST_RECORD_AUDIO_PERMISSION = 200
 
     private var mSensorManager: SensorManager? = null
     private var mProximity: Sensor? = null
