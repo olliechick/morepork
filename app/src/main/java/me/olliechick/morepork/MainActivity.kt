@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         // set on-click listeners
         playButton.setOnClickListener {
-            val intent = Intent(this, GameActivity::class.java)
+            val intent = Intent(this, GameOverActivity::class.java)
             startActivity(intent)
         }
         helpButton.setOnClickListener {

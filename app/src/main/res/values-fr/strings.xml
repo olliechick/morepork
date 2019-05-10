@@ -6,4 +6,13 @@
     <string name="support">Secours</string>
     <string name="report_issues">Signaler des problèmes techniques ou proposer de nouvelles fonctionnalités</string>
     <string name="send_feedback">Envoyer des commentaires</string>
+    <string name="help">Aidez</string>
+    <string name="theme">Thème</string>
+    <string name="light">Clair</string>
+    <string name="dark">Brun</string>
+    <string name="difficulty">Difficulté</string>
+    <string name="home">Écran d\'accueil</string>
+    <string name="play_again">Rejouez</string>
+    <string name="high_score">Score élevé</string>
+    <string name="your_score">Votre score</string>
 </resources>

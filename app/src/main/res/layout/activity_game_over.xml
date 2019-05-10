@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" android:id="@+id/your_score_label" android:layout_weight="1"/>
         <TextView
-                android:text="@string/zero_score"
+                android:text="placeholder"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" android:id="@+id/your_score_textview" android:layout_weight="1"/>
     </LinearLayout>
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" android:id="@+id/high_score_label" android:layout_weight="1"/>
         <TextView
-                android:text="@string/zero_score"
+                android:text="placeholder"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" android:id="@+id/high_score_textview" android:layout_weight="1"/>
     </LinearLayout>

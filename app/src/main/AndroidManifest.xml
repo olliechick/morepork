@@ -15,7 +15,7 @@
             tools:ignore="GoogleAppIndexingWarning">
         <activity
                 android:name=".SettingsActivity"
-                android:label="@string/title_activity_settings2"
+                android:label="@string/settings"
                 android:parentActivityName=".MainActivity">
         </activity>
         <activity
