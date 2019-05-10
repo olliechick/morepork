@@ -1,4 +1,4 @@
-package me.olliechick.morepork
+package nz.co.olliechick.morepork
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

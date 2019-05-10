@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="me.olliechick.morepork">
+          package="nz.co.olliechick.morepork">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
@@ -14,19 +14,19 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
         <activity
-                android:name=".SettingsActivity"
+                android:name="co.nz.co.olliechick.morepork.SettingsActivity"
                 android:label="@string/settings"
-                android:parentActivityName=".MainActivity">
+                android:parentActivityName="co.nz.co.olliechick.morepork.MainActivity">
         </activity>
         <activity
-                android:name=".GameOverActivity"
+                android:name="co.nz.co.olliechick.morepork.GameOverActivity"
                 android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
         <activity
-                android:name=".GameActivity"
+                android:name="co.nz.co.olliechick.morepork.GameActivity"
                 android:screenOrientation="landscape"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".MainActivity">
+        <activity android:name="co.nz.co.olliechick.morepork.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

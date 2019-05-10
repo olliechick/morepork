@@ -1,4 +1,4 @@
-package me.olliechick.morepork
+package nz.co.olliechick.morepork
 
 class Util {
     companion object {

@@ -1,4 +1,4 @@
-package me.olliechick.morepork
+package nz.co.olliechick.morepork
 
 import android.content.Intent
 import android.net.Uri
