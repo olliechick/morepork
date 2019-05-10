@@ -1,9 +1,9 @@
 <resources>
     <!-- Difficulty Preference -->
     <string-array name="difficulty_entries">
-        <item>Easy</item>
-        <item>Medium</item>
-        <item>Hard</item>
+        <item>@string/easy</item>
+        <item>@string/medium</item>
+        <item>@string/hard</item>
     </string-array>
 
     <string-array name="difficulty_values">
@@ -13,8 +13,8 @@
     </string-array>
     <!-- Theme Preference -->
     <string-array name="theme_entries">
-        <item>Light</item>
-        <item>Dark</item>
+        <item>@string/light</item>
+        <item>@string/dark</item>
     </string-array>
 
     <string-array name="theme_values">

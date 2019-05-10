@@ -15,4 +15,7 @@
     <string name="play_again">Rejouez</string>
     <string name="high_score">Score élevé</string>
     <string name="your_score">Votre score</string>
+    <string name="easy">Facile</string>
+    <string name="medium">Moyenne</string>
+    <string name="hard">Difficile</string>
 </resources>
