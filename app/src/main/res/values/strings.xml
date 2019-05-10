@@ -20,5 +20,9 @@
     <!-- Messages Preferences -->
     <string name="difficulty_title">Difficulty</string>
     <string name="theme_title">Theme</string>
+    <string name="support">Support</string>
+    <string name="report_issues">Report technical issues or suggest new features</string>
+    <string name="send_feedback">Send feedback</string>
+    <string name="dev_email" translatable="false">moreporkapp@gmail.com</string>
 
 </resources>
