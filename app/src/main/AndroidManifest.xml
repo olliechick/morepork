@@ -14,19 +14,19 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
         <activity
-                android:name="co.nz.co.olliechick.morepork.SettingsActivity"
+                android:name=".SettingsActivity"
                 android:label="@string/settings"
-                android:parentActivityName="co.nz.co.olliechick.morepork.MainActivity">
+                android:parentActivityName=".MainActivity">
         </activity>
         <activity
-                android:name="co.nz.co.olliechick.morepork.GameOverActivity"
+                android:name=".GameOverActivity"
                 android:theme="@style/Theme.AppCompat.NoActionBar"/>
 
         <activity
-                android:name="co.nz.co.olliechick.morepork.GameActivity"
+                android:name=".GameActivity"
                 android:screenOrientation="landscape"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name="co.nz.co.olliechick.morepork.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

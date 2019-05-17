@@ -18,9 +18,14 @@ import android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+import android.graphics.Point
+import android.view.Gravity
 
 
 class GameActivity : AppCompatActivity(), SensorEventListener {
+
+
+    private var sideScrollView: SideScrollView? = null
 
     private val REQUEST_RECORD_AUDIO_PERMISSION = 200
     private val SOUND_BARRIER = 2000 // how loud it has to be to move the avatar up
@@ -40,6 +45,20 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
         mProximity = mSensorManager!!.getDefaultSensor(Sensor.TYPE_PROXIMITY)
 
         soundMeter = SoundMeter()
+
+        // Get a Display object to access screen details
+        val display = windowManager.defaultDisplay
+
+        // Load the resolution into a Point object
+        val resolution = Point()
+        display.getSize(resolution)
+
+        // And finally set the view for our game
+        sideScrollView = SideScrollView(this, resolution.x, resolution.y)
+
+        // Make our sideScrollView the view for the Activity
+        setContentView(sideScrollView)
+
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -54,6 +73,7 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onResume() {
         super.onResume()
+        sideScrollView?.resume();
 
         window.decorView.systemUiVisibility = (SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -97,6 +117,7 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
         super.onPause()
         mSensorManager!!.unregisterListener(this)
         soundMeter!!.stop()
+        sideScrollView?.pause();
     }
 
     override fun onSensorChanged(event: SensorEvent) {
@@ -128,20 +149,31 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
 
     fun moveToTop() {
         level = Level.TOP
-        Toast.makeText(applicationContext, "moving to top", Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, "Here", Toast.LENGTH_LONG).apply {
+            setGravity(Gravity.TOP, 0, 0)
+            show()
+        }
     }
 
     fun moveToMiddle() {
         level = Level.MIDDLE
-        Toast.makeText(applicationContext, "moving to middle", Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, "Here", Toast.LENGTH_LONG).apply {
+            setGravity(Gravity.CENTER, 0, 0)
+            show()
+        }
     }
 
     fun moveToBottom() {
         level = Level.BOTTOM
-        Toast.makeText(applicationContext, "moving to bottom", Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, "Here", Toast.LENGTH_LONG).apply {
+            setGravity(Gravity.BOTTOM, 0, 0)
+            show()
+        }
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         // we don't need to do anything here (but we promised to implement this as a SensorEventListener)
     }
+
+
 }
