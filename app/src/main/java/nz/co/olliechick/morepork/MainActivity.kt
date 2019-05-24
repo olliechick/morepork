@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
+import androidx.preference.PreferenceManager
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity() {
 
         val actionBar = supportActionBar
         actionBar?.title = getString(R.string.app_name)
+
+        Util.updateTheme(PreferenceManager.getDefaultSharedPreferences(this))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

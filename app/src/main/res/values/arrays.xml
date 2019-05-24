@@ -11,6 +11,7 @@
         <item>medium</item>
         <item>hard</item>
     </string-array>
+
     <!-- Theme Preference -->
     <string-array name="theme_entries">
         <item>@string/light</item>
