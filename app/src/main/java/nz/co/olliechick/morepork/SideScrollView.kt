@@ -41,7 +41,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         backgrounds = ArrayList()
 
         prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val theme = prefs.getString("theme", "light")
+        val theme = prefs.getString("theme", "background")
 
         backgrounds.add(Background(this.context, screenWidth, screenHeight, theme, 0, 110, 200f))
     }
