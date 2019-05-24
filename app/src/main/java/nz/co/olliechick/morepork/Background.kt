@@ -9,7 +9,7 @@ import android.graphics.BitmapFactory
 /**
  * Background image
  */
-class Background internal constructor(context: Context, screenWidth: Int, screenHeight: Int, bitmapName: String, sY: Int, eY: Int, var speed: Float) {
+class Background internal constructor(context: Context, screenWidth: Int, screenHeight: Int, defType: String, sY: Int, eY: Int, var speed: Float) {
 
     internal var bitmap: Bitmap
 
@@ -23,7 +23,7 @@ class Background internal constructor(context: Context, screenWidth: Int, screen
     init {
 
         // Make a resource id out of the string of the file name
-        val resID = context.resources.getIdentifier(bitmapName, "drawable", context.packageName)
+        val resID = context.resources.getIdentifier("background", defType, context.packageName)
 
         // Load the bitmap using the id
         bitmap = BitmapFactory.decodeResource(context.resources, resID)
