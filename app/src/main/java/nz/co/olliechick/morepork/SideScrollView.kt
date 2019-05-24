@@ -43,7 +43,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         prefs = PreferenceManager.getDefaultSharedPreferences(context)
         val theme = prefs.getString("theme", "drawable")!!
 
-        backgrounds.add(Background(this.context, screenWidth, screenHeight, theme, 0, 110, 200f))
+        backgrounds.add(Background(this.context, screenWidth, screenHeight, 0, 110, 200f))
     }
 
     override fun run() {
