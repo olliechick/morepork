@@ -13,7 +13,13 @@ import androidx.preference.PreferenceManager
 class SettingsActivity : AppCompatActivity() {
 
     private val listener: SharedPreferences.OnSharedPreferenceChangeListener =
-        SharedPreferences.OnSharedPreferenceChangeListener { prefs, key -> if (key == "theme") Util.updateTheme(prefs) }
+        SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
+            if (key == "theme") {
+                Util.updateTheme(prefs)
+                recreate()
+            }
+        }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
