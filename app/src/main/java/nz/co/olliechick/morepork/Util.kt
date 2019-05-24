@@ -8,10 +8,15 @@ class Util {
         const val helpUrl =
             "https://docs.google.com/document/d/1p9o2-fDhx2gYimRF4TkAfh5I9CPeMrvjpM7GsClGvqA/edit?usp=sharing"
 
-        fun updateTheme(prefs: SharedPreferences) {
+        fun updateTheme(prefs: SharedPreferences): String {
             val themePref = prefs.getString("theme", "")
-            val theme = if (themePref == "dark") AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-            AppCompatDelegate.setDefaultNightMode(theme)
+            return if (themePref == "dark") {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                "dark"
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                "light"
+            }
         }
     }
 }

@@ -12,6 +12,8 @@ import androidx.preference.PreferenceManager
 
 class MainActivity : AppCompatActivity() {
 
+    private var displayedTheme: String = "light"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,7 +36,13 @@ class MainActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar?.title = getString(R.string.app_name)
 
-        Util.updateTheme(PreferenceManager.getDefaultSharedPreferences(this))
+        displayedTheme = Util.updateTheme(PreferenceManager.getDefaultSharedPreferences(this))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val currentTheme = PreferenceManager.getDefaultSharedPreferences(this).getString("theme", "")
+        if (currentTheme != displayedTheme) recreate()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
