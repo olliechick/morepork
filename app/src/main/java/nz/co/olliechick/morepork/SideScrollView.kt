@@ -14,40 +14,25 @@ import java.util.ArrayList
 /**
  *  Handles animating background images.
  */
-class SideScrollView internal constructor(internal var context: Context, var screenWidth: Int, internal var screenHeight: Int) : SurfaceView(context), Runnable {
+class SideScrollView internal constructor(context: Context, screenWidth: Int, screenHeight: Int) :
+    SurfaceView(context), Runnable {
 
-    private var backgrounds: ArrayList<Background>
+    private var backgrounds: ArrayList<Background> =
+        arrayListOf(Background(this.context, screenWidth, screenHeight, 0, 110, 200f))
 
     @Volatile
     private var running: Boolean = false
     private var gameThread: Thread? = null
 
     // For drawing
-    private val paint: Paint
+    private val paint: Paint = Paint()
     private var canvas: Canvas? = null
-    private val ourHolder: SurfaceHolder
-    private val prefs: SharedPreferences
+    private val ourHolder: SurfaceHolder = holder
 
     // Control the fps
     private var fps: Long = 60
 
-    init {
-
-        // Initialize our drawing objects
-        ourHolder = holder
-        paint = Paint()
-
-        // Initialize our array list
-        backgrounds = ArrayList()
-
-        prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        val theme = prefs.getString("theme", "drawable")!!
-
-        backgrounds.add(Background(this.context, screenWidth, screenHeight, 0, 110, 200f))
-    }
-
     override fun run() {
-
         while (running) {
             val startFrameTime = System.currentTimeMillis()
 
@@ -72,7 +57,6 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         } catch (e: InterruptedException) {
             // Error
         }
-
     }
 
     // Make a new thread and start it
@@ -101,7 +85,6 @@ class SideScrollView internal constructor(internal var context: Context, var scr
 
         canvas!!.drawBitmap(bg.bitmap, fromRect1, toRect1, paint)
         canvas!!.drawBitmap(bg.bitmap, fromRect2, toRect2, paint)
-
     }
 
     /**
