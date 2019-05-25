@@ -128,11 +128,11 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
         }
     }
 
-    fun handCovered() {
+    private fun handCovered() {
         moveToBottom()
     }
 
-    fun handRemoved() {
+    private fun handRemoved() {
         moveToMiddle()
     }
 
@@ -148,18 +148,18 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
         }
     }
 
-    fun moveToTop() {
+    private fun moveToTop() {
         level = Level.TOP
         sideScrollView?.updateLevel(level)
     }
 
-    fun moveToMiddle() {
+    private fun moveToMiddle() {
         level = Level.MIDDLE
         sideScrollView?.updateLevel(level)
 
     }
 
-    fun moveToBottom() {
+    private fun moveToBottom() {
         level = Level.BOTTOM
         sideScrollView?.updateLevel(level)
     }
