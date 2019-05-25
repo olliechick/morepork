@@ -9,7 +9,8 @@ import java.util.ArrayList
 /**
  *  Handles animating background images.
  */
-class SideScrollView internal constructor(internal var context: Context, var screenWidth: Int,  var screenHeight: Int) : SurfaceView(context), Runnable {
+class SideScrollView internal constructor(internal var context: Context, var screenWidth: Int, var screenHeight: Int) :
+    SurfaceView(context), Runnable {
 
     private var backgrounds: ArrayList<Background>
     private var obstacles: ArrayList<Obstacle>
@@ -19,31 +20,26 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     private var gameThread: Thread? = null
 
     // For drawing
-    private val paint: Paint
+    private val paint: Paint = Paint()
     private var canvas: Canvas? = null
-    private val ourHolder: SurfaceHolder
+    private val ourHolder: SurfaceHolder = holder
 
+    private var speed = 500f
 
-    private var owlBitmap : Bitmap
-    private var owlWidth : Int
-    private var owlHeight : Int
+    private var owlBitmap: Bitmap
+    private var owlWidth: Int
+    private var owlHeight: Int
 
     // Control the fps
     private var fps: Long = 60
 
-    private var level : Level = Level.MIDDLE
+    private var level: Level = Level.MIDDLE
 
-    fun updateLevel(level : Level){ this.level = level}
-
-
+    fun updateLevel(level: Level) {
+        this.level = level
+    }
 
     init {
-
-        // Initialize our drawing objects
-        ourHolder = holder
-        // ourForegroundHolder = holder
-        paint = Paint()
-
         // Make a resource id out of the string of the file name
         val resID = context.resources.getIdentifier("morepork", "drawable", context.packageName)
         owlBitmap = BitmapFactory.decodeResource(context.resources, resID)
@@ -53,23 +49,37 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         obstacles = ArrayList()
 
         val top = 0
-        val middle = (screenHeight*(1/3.toDouble())).toInt()
-        val bottom = (screenHeight*(2/3.toDouble())).toInt()
+        val middle = (screenHeight * (1 / 3.toDouble())).toInt()
+        val bottom = (screenHeight * (2 / 3.toDouble())).toInt()
 
-        owlBitmap = Bitmap.createScaledBitmap(owlBitmap,
-            (((screenHeight/6.toDouble()).toInt()*owlBitmap.width)/(owlBitmap.height)), (screenHeight/6.toDouble()).toInt(), true)
+        owlBitmap = Bitmap.createScaledBitmap(
+            owlBitmap,
+            (((screenHeight / 6.toDouble()).toInt() * owlBitmap.width) / (owlBitmap.height)),
+            (screenHeight / 6.toDouble()).toInt(),
+            true
+        )
 
         owlWidth = owlBitmap.width
         owlHeight = owlBitmap.height
 
 
-        backgrounds.add(Background(this.context, screenWidth, screenHeight,0, 110, 200f))
+        backgrounds.add(Background(this.context, screenWidth, screenHeight, 0, 110, speed))
 
-        // Examples of how to add them, obviously we dont want to add them all at once. When they are off the screen they get removed.
-        obstacles.add(Obstacle(this.context, screenWidth, screenHeight, "drone", 0, 110, 200f, 3.0F, middle))
-        obstacles.add(Obstacle(this.context, screenWidth, screenHeight, "tree", 0, 110, 200f, 1.5F, middle))
-        obstacles.add(Obstacle(this.context, screenWidth, screenHeight, "branch", 0, 110, 200f, 3.0F, top))
-        obstacles.add(Obstacle(this.context, screenWidth, screenHeight, "fern", 0, 110, 200f, 3.0F, bottom))
+        val sY = 0
+        val eY = 100
+
+        val possibleObstacles = arrayOf(
+            Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, speed, 3.0F, middle),
+            Obstacle(this.context, screenWidth, screenHeight, "tree", sY, eY, speed, 1.5F, middle),
+            Obstacle(this.context, screenWidth, screenHeight, "branch", sY, eY, speed, 3.0F, top),
+            Obstacle(this.context, screenWidth, screenHeight, "fern", sY, eY, speed, 3.0F, bottom)
+        )
+
+        for (i in 0..100) {
+            val obstacle = possibleObstacles[(Math.floor(Math.random() * possibleObstacles.size)).toInt()].clone() as Obstacle
+            obstacle.setOffset(i*1500)
+            obstacles.add(obstacle)
+        }
     }
 
     override fun run() {
@@ -140,48 +150,51 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         // top    The Y coordinate of the top of the rectangle
         // right  The X coordinate of the right side of the rectangle
         // bottom The Y coordinate of the bottom of the rectangle
-        val leftSrc : Int
-        val rightSrc : Int
+        val leftSrc: Int
+        val rightSrc: Int
 
-        val leftDst : Int
-        val rightDst : Int
-        val topDst : Int
-        val bottomDst : Int
+        val leftDst: Int
+        val rightDst: Int
+        val topDst: Int
+        val bottomDst: Int
 
         // Make a copy of the relevant background
-        if((obstacle.positionX + obstacle.width) > screenWidth) {
-            // clip right side of obstacle
-            leftSrc = 0
-            rightSrc = (obstacle.width - ((obstacle.positionX+obstacle.width)-screenWidth))
+        when {
+            (obstacle.positionX + obstacle.width) > screenWidth -> {
+                // clip right side of obstacle
+                leftSrc = 0
+                rightSrc = (obstacle.width - ((obstacle.positionX + obstacle.width) - screenWidth))
 
-            leftDst = obstacle.positionX
-            rightDst = screenWidth
-            topDst = obstacle.positionY
-            bottomDst = obstacle.positionY + obstacle.height
-        } else if (obstacle.positionX < 0) {
-            // clip left side of obstacle
-            leftSrc = (-obstacle.positionX)
-            rightSrc = obstacle.width
+                leftDst = obstacle.positionX
+                rightDst = screenWidth
+                topDst = obstacle.positionY
+                bottomDst = obstacle.positionY + obstacle.height
+            }
+            obstacle.positionX < 0 -> {
+                // clip left side of obstacle
+                leftSrc = (-obstacle.positionX)
+                rightSrc = obstacle.width
 
-            leftDst = 0
-            rightDst = (obstacle.width + obstacle.positionX)
-            topDst = obstacle.positionY
-            bottomDst = obstacle.positionY + obstacle.height
-        } else {
-            leftSrc = 0
-            rightSrc = obstacle.width
+                leftDst = 0
+                rightDst = (obstacle.width + obstacle.positionX)
+                topDst = obstacle.positionY
+                bottomDst = obstacle.positionY + obstacle.height
+            }
+            else -> {
+                leftSrc = 0
+                rightSrc = obstacle.width
 
-            leftDst = obstacle.positionX
-            rightDst = obstacle.positionX + obstacle.width
-            topDst = obstacle.positionY
-            bottomDst = obstacle.positionY + obstacle.height
+                leftDst = obstacle.positionX
+                rightDst = obstacle.positionX + obstacle.width
+                topDst = obstacle.positionY
+                bottomDst = obstacle.positionY + obstacle.height
+            }
         }
         val fromRect1 = Rect(leftSrc, 0, rightSrc, obstacle.height)
         val toRect1 = Rect(leftDst, topDst, rightDst, bottomDst)
         canvas!!.drawBitmap(obstacle.bitmap, fromRect1, toRect1, paint)
 
     }
-
 
 
     /**
@@ -198,9 +211,11 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         }
     }
 
-    private fun removeOldObstacles(){
-        var temp : ArrayList<Obstacle> = ArrayList()
-        obstacles.forEach { obstacle -> if (obstacle.positionX > (-obstacle.width)) temp.add(obstacle) else obstacle.positionX = screenWidth }
+    private fun removeOldObstacles() {
+        val temp: ArrayList<Obstacle> = ArrayList()
+        obstacles.forEach { obstacle ->
+            if (obstacle.positionX > (-obstacle.width)) temp.add(obstacle) else obstacle.positionX = screenWidth
+        }
         obstacles = temp
     }
 
@@ -213,16 +228,16 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         }
     }
 
-    private fun drawOwl(){
+    private fun drawOwl() {
         if (holder.surface.isValid) {
             val leftDst = (screenWidth * 0.5).toInt() - (owlWidth * 0.5).toInt()
             val rightDst = (screenWidth * 0.5).toInt() + (owlWidth * 0.5).toInt()
-            val topDst : Int
-            val bottomDst : Int
-            if (level == Level.MIDDLE){
+            val topDst: Int
+            val bottomDst: Int
+            if (level == Level.MIDDLE) {
                 topDst = (screenHeight * 0.5).toInt() - (owlHeight * 0.5).toInt()
                 bottomDst = (screenHeight * 0.5).toInt() + (owlHeight * 0.5).toInt()
-            } else if (level == Level.BOTTOM){
+            } else if (level == Level.BOTTOM) {
                 topDst = screenHeight - owlHeight
                 bottomDst = screenHeight
             } else {
