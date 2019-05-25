@@ -9,29 +9,30 @@ import android.graphics.BitmapFactory
  * Holds scaled bitmap of obstacle along with current position on screen for
  * rendering.
  */
-class Obstacle internal constructor(context: Context,
-                                    screenWidth: Int,
-                                    screenHeight: Int,
-                                    bitmapName: String,
-                                    sY: Int, eY: Int,
-                                    var speed: Float,
-                                    var scalingFactor : Float,
-                                    var positionY : Int) {
+class Obstacle internal constructor(
+    context: Context,
+    var screenWidth: Int,
+    screenHeight: Int,
+    bitmapName: String,
+    sY: Int,
+    eY: Int,
+    var speed: Float,
+    var scalingFactor: Float,
+    var positionY: Int
+) : Cloneable {
 
     internal var bitmap: Bitmap
 
     internal var width: Int = 0
     internal var height: Int = 0
 
-    internal var positionX : Int = screenWidth
-
+    internal var positionX: Int = screenWidth
 
     internal var xClip: Int = 0
     internal var startY: Int = 0
     internal var endY: Int = 0
 
     init {
-
         // Make a resource id out of the string of the file name
         val resID = context.resources.getIdentifier(bitmapName, "drawable", context.packageName)
 
@@ -43,16 +44,27 @@ class Obstacle internal constructor(context: Context,
         endY = eY * (screenHeight / 100)
 
         // Create the bitmap
-        bitmap = Bitmap.createScaledBitmap(bitmap,
-            (((screenHeight/scalingFactor).toInt()*bitmap.width)/(bitmap.height)), screenHeight/scalingFactor.toInt(), true)
+        bitmap = Bitmap.createScaledBitmap(
+            bitmap,
+            (((screenHeight / scalingFactor).toInt() * bitmap.width) / (bitmap.height)),
+            screenHeight / scalingFactor.toInt(),
+            true
+        )
 
         // Save the width and height for later use
         width = bitmap.width
         height = bitmap.height
     }
 
+    fun setOffset(offset: Int) {
+        positionX = screenWidth + offset
+    }
 
     fun update(fps: Long) {
         positionX -= (speed / fps).toInt()
+    }
+
+    public override fun clone(): Any {
+        return super.clone()
     }
 }
