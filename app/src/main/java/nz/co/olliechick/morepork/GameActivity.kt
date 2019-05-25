@@ -35,7 +35,8 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
     private var mProximity: Sensor? = null
     private var soundMeter: SoundMeter? = null
     private var permissionToRecordAccepted = false
-    private var level = Level.MIDDLE
+    var level = Level.MIDDLE
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -149,31 +150,21 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
 
     fun moveToTop() {
         level = Level.TOP
-        Toast.makeText(applicationContext, "Here", Toast.LENGTH_LONG).apply {
-            setGravity(Gravity.TOP, 0, 0)
-            show()
-        }
+        sideScrollView?.updateLevel(level)
     }
 
     fun moveToMiddle() {
         level = Level.MIDDLE
-        Toast.makeText(applicationContext, "Here", Toast.LENGTH_LONG).apply {
-            setGravity(Gravity.CENTER, 0, 0)
-            show()
-        }
+        sideScrollView?.updateLevel(level)
+
     }
 
     fun moveToBottom() {
         level = Level.BOTTOM
-        Toast.makeText(applicationContext, "Here", Toast.LENGTH_LONG).apply {
-            setGravity(Gravity.BOTTOM, 0, 0)
-            show()
-        }
+        sideScrollView?.updateLevel(level)
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         // we don't need to do anything here (but we promised to implement this as a SensorEventListener)
     }
-
-
 }
