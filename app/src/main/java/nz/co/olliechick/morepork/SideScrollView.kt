@@ -45,7 +45,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         paint = Paint()
 
         // Make a resource id out of the string of the file name
-        val resID = context.resources.getIdentifier("owl", "drawable", context.packageName)
+        val resID = context.resources.getIdentifier("morepork", "drawable", context.packageName)
         owlBitmap = BitmapFactory.decodeResource(context.resources, resID)
 
         // Initialize our array list
