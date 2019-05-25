@@ -52,7 +52,7 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
 
         // Load the resolution into a Point object
         val resolution = Point()
-        display.getSize(resolution)
+        display.getRealSize(resolution)
 
         // And finally set the view for our game
         sideScrollView = SideScrollView(this, resolution.x, resolution.y)
