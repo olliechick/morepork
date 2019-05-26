@@ -24,7 +24,8 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     private var canvas: Canvas? = null
     private val ourHolder: SurfaceHolder = holder
 
-    private var speed = 500f
+    private var obstacleSpeed = 500f
+    private var backgroundSpeed = 100f
 
     private var owlBitmap: Bitmap
     private var owlWidth: Int
@@ -63,16 +64,16 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         owlHeight = owlBitmap.height
 
 
-        backgrounds.add(Background(this.context, screenWidth, screenHeight, 0, 110, speed))
+        backgrounds.add(Background(this.context, screenWidth, screenHeight, 0, 110, backgroundSpeed))
 
         val sY = 0
         val eY = 100
 
         val possibleObstacles = arrayOf(
-            Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, speed, 3.0F, middle),
-            Obstacle(this.context, screenWidth, screenHeight, "tree", sY, eY, speed, 1.5F, middle),
-            Obstacle(this.context, screenWidth, screenHeight, "branch", sY, eY, speed, 3.0F, top),
-            Obstacle(this.context, screenWidth, screenHeight, "fern", sY, eY, speed, 3.0F, bottom)
+            Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, obstacleSpeed, 3.0F, middle),
+            Obstacle(this.context, screenWidth, screenHeight, "tree", sY, eY, obstacleSpeed, 1.5F, middle),
+            Obstacle(this.context, screenWidth, screenHeight, "branch", sY, eY, obstacleSpeed, 3.0F, top),
+            Obstacle(this.context, screenWidth, screenHeight, "fern", sY, eY, obstacleSpeed, 3.0F, bottom)
         )
 
         for (i in 0..100) {
