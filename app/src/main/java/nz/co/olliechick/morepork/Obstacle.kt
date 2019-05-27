@@ -3,6 +3,8 @@ package nz.co.olliechick.morepork
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.Rect
 
 
 /**
@@ -28,11 +30,13 @@ class Obstacle internal constructor(
 
     internal var positionX: Int = screenWidth
 
+
     internal var xClip: Int = 0
     internal var startY: Int = 0
     internal var endY: Int = 0
 
     init {
+
         // Make a resource id out of the string of the file name
         val resID = context.resources.getIdentifier(bitmapName, "drawable", context.packageName)
 
@@ -63,6 +67,68 @@ class Obstacle internal constructor(
     fun update(fps: Long) {
         positionX -= (speed / fps).toInt()
     }
+
+    /**
+     * First we check if the rectangle bounds of the owl bitmap and the obstacle bitmap overlap.
+     * If they do then we call isCollisionDetected to check if any non-transparent parts overlap,
+     * if they do we return true for a collision, otherwise we return false.
+     */
+    fun isOverlapping(left : Int, right : Int, top : Int, bottom : Int, bitmapOther : Bitmap): Boolean {
+        if(((positionX + width) > left && positionX < right ) &&
+            (positionY < bottom && (positionY + height) > top )) {
+                if (isCollisionDetected(bitmapOther, left, top, bitmap, positionX, positionY)){
+                    return true
+                }
+        }
+        return false;
+    }
+
+    /**
+     * Check if pixel is not transparent
+     */
+    private fun isFilled(pixel: Int): Boolean {
+        return pixel != Color.TRANSPARENT
+    }
+
+
+    /**
+     * Check pixel-perfectly if two views are colliding
+     */
+    private fun isCollisionDetected(
+        bitmap1: Bitmap, x1: Int, y1: Int,
+        bitmap2: Bitmap, x2: Int, y2: Int
+    ): Boolean {
+
+        val bounds1 = Rect(x1, y1, x1 + bitmap1!!.getWidth(), y1 + bitmap1!!.getHeight())
+        val bounds2 = Rect(x2, y2, x2 + bitmap2!!.getWidth(), y2 + bitmap2!!.getHeight())
+
+        if (Rect.intersects(bounds1, bounds2)) {
+            val collisionBounds = getCollisionBounds(bounds1, bounds2)
+            for (i in collisionBounds.left until collisionBounds.right) {
+                for (j in collisionBounds.top until collisionBounds.bottom) {
+                    val bitmap1Pixel = bitmap1!!.getPixel(i - x1, j - y1)
+                    val bitmap2Pixel = bitmap2!!.getPixel(i - x2, j - y2)
+                    if (isFilled(bitmap1Pixel) && isFilled(bitmap2Pixel)) {
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+
+
+    /**
+     * Returns the rectangle that defines the overlap of the two
+     * given rectangles.
+     */
+    private fun getCollisionBounds(rect1: Rect, rect2: Rect): Rect {
+        return Rect(Math.max(rect1.left, rect2.left),
+                    Math.max(rect1.top, rect2.top),
+                    Math.min(rect1.right, rect2.right),
+                    Math.min(rect1.bottom, rect2.bottom))
+    }
+
 
     public override fun clone(): Any {
         return super.clone()

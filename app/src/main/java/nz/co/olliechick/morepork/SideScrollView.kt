@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import android.widget.Toast
 import java.util.ArrayList
 
 /**
@@ -70,6 +71,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
 
         val possibleObstacles = arrayOf(
             Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, obstacleSpeed, 3.0F, middle),
+            Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, obstacleSpeed, 3.0F, top),
             Obstacle(this.context, screenWidth, screenHeight, "tree", sY, eY, obstacleSpeed, 1.5F, middle),
             Obstacle(this.context, screenWidth, screenHeight, "branch", sY, eY, obstacleSpeed, 3.0F, top),
             Obstacle(this.context, screenWidth, screenHeight, "fern", sY, eY, obstacleSpeed, 3.0F, bottom)
@@ -96,6 +98,9 @@ class SideScrollView internal constructor(internal var context: Context, var scr
                 drawOwl()
                 drawObstacles()
                 holder.unlockCanvasAndPost(canvas)
+                if (checkForCollisions()) {
+                    running = false
+                }
             }
 
             // Calculate the fps this frame
@@ -250,6 +255,30 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         val toRect1 = Rect(leftDst, topDst, rightDst, bottomDst)
         canvas!!.drawBitmap(owlBitmap, fromRect1, toRect1, paint)
     }
+
+    public fun checkForCollisions() : Boolean {
+        val leftDst = (screenWidth * 0.5).toInt() - (owlWidth * 0.5).toInt()
+        val rightDst = (screenWidth * 0.5).toInt() + (owlWidth * 0.5).toInt()
+        val topDst: Int
+        val bottomDst: Int
+        if (level == Level.MIDDLE) {
+            topDst = (screenHeight * 0.5).toInt() - (owlHeight * 0.5).toInt()
+            bottomDst = (screenHeight * 0.5).toInt() + (owlHeight * 0.5).toInt()
+        } else if (level == Level.BOTTOM) {
+            topDst = screenHeight - owlHeight
+            bottomDst = screenHeight
+        } else {
+            topDst = 0
+            bottomDst = owlHeight
+        }
+        obstacles.forEach { obstacle ->
+            if (obstacle.isOverlapping(leftDst, rightDst, topDst, bottomDst, owlBitmap)){
+                return true
+            }
+        }
+        return false
+    }
+
 
     /**
      * Draw the background
