@@ -289,7 +289,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         val path = Path()
         val text = "$score"
         val scoreLocationX = (screenWidth * 0.075).toFloat()
-        val scoreLocationY = (screenHeight * 0.2).toFloat()
+        val scoreLocationY = (screenHeight * 0.25).toFloat()
 
         paint.apply {
             color = Color.BLACK
