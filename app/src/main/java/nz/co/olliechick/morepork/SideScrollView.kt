@@ -95,6 +95,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
                 draw()
                 drawOwl()
                 drawObstacles()
+                drawScore()
                 holder.unlockCanvasAndPost(canvas)
             }
 
@@ -249,6 +250,17 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         val fromRect1 = Rect(0, 0, owlWidth, owlHeight)
         val toRect1 = Rect(leftDst, topDst, rightDst, bottomDst)
         canvas!!.drawBitmap(owlBitmap, fromRect1, toRect1, paint)
+    }
+
+    private fun drawScore() {
+//        canvas!!.drawPaint(paint)
+        paint.apply {
+            color = Color.WHITE
+            textSize = 100F
+            style = Paint.Style.FILL
+            isAntiAlias = true
+        }
+        canvas!!.drawText("My Text", 100f, 100f, paint)
     }
 
     /**
