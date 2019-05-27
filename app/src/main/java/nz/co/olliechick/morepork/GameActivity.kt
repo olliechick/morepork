@@ -20,6 +20,7 @@ import android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 import android.graphics.Point
 import android.view.Gravity
+import android.view.WindowManager
 
 
 class GameActivity : AppCompatActivity(), SensorEventListener {
@@ -41,6 +42,8 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         mSensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         mProximity = mSensorManager!!.getDefaultSensor(Sensor.TYPE_PROXIMITY)
@@ -74,7 +77,7 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onResume() {
         super.onResume()
-        sideScrollView?.resume();
+        sideScrollView?.resume()
 
         window.decorView.systemUiVisibility = (SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -118,7 +121,7 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
         super.onPause()
         mSensorManager!!.unregisterListener(this)
         soundMeter!!.stop()
-        sideScrollView?.pause();
+        sideScrollView?.pause()
     }
 
     override fun onSensorChanged(event: SensorEvent) {
