@@ -2,7 +2,6 @@ package nz.co.olliechick.morepork
 
 import android.content.Context
 import android.graphics.*
-import android.view.SurfaceHolder
 import android.view.SurfaceView
 import java.util.ArrayList
 
@@ -33,7 +32,8 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     // Control the fps
     private var fps: Long = 60
 
-    private var level: Level = Level.MIDDLE
+    private var level = Level.MIDDLE
+    private var score = 0
 
     fun updateLevel(level: Level) {
         this.level = level
@@ -96,6 +96,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
                 drawOwl()
                 drawObstacles()
                 drawScore()
+                score++
                 holder.unlockCanvasAndPost(canvas)
             }
 
@@ -253,14 +254,29 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     }
 
     private fun drawScore() {
-//        canvas!!.drawPaint(paint)
         paint.apply {
-            color = Color.WHITE
-            textSize = 100F
+            color = Color.BLACK
+            textSize = 200F
             style = Paint.Style.FILL
             isAntiAlias = true
+            typeface = Typeface.DEFAULT_BOLD
         }
-        canvas!!.drawText("My Text", 100f, 100f, paint)
+
+        val stkPaint = Paint()
+        stkPaint.apply {
+            style = Paint.Style.STROKE
+            strokeWidth = 20f
+            color = Color.WHITE
+        }
+
+        val path = Path()
+        val text = "$score"
+        paint.getTextPath(text, 0, text.length, (screenWidth * 0.075).toFloat(), (screenHeight * 0.2).toFloat(), path)
+        canvas!!.drawPath(path, stkPaint)
+        canvas!!.drawPath(path, paint)
+
+//        canvas!!.drawText("45", (screenWidth * 0.1).toFloat(), (screenHeight * 0.2).toFloat(), stkPaint)
+//        canvas!!.drawText("45", (screenWidth * 0.1).toFloat(), (screenHeight * 0.2).toFloat(), paint)
     }
 
     /**
