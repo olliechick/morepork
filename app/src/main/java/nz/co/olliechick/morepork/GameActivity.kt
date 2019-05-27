@@ -2,6 +2,7 @@ package nz.co.olliechick.morepork
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -107,7 +108,6 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
         handler.postDelayed(object : Runnable {
             override fun run() {
                 val soundLevel = soundMeter?.amplitude
-//              Toast.makeText(applicationContext, "sound level = ${soundMeter?.amplitude}", Toast.LENGTH_SHORT).show()
                 if (soundLevel != null) {
                     if (soundLevel > SOUND_BARRIER) loudNoise()
                     else quietNoise()
@@ -130,6 +130,7 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
             else handCovered()
         }
     }
+
 
     private fun handCovered() {
         moveToBottom()
