@@ -22,7 +22,6 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     // For drawing
     private val paint: Paint = Paint()
     private var canvas: Canvas? = null
-    private val ourHolder: SurfaceHolder = holder
 
     private var obstacleSpeed = 500f
     private var backgroundSpeed = 100f
@@ -77,8 +76,9 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         )
 
         for (i in 0..100) {
-            val obstacle = possibleObstacles[(Math.floor(Math.random() * possibleObstacles.size)).toInt()].clone() as Obstacle
-            obstacle.setOffset(i*1500)
+            val obstacle =
+                possibleObstacles[(Math.floor(Math.random() * possibleObstacles.size)).toInt()].clone() as Obstacle
+            obstacle.setOffset(i * 1500)
             obstacles.add(obstacle)
         }
     }
@@ -90,9 +90,13 @@ class SideScrollView internal constructor(internal var context: Context, var scr
 
             update()
 
-            draw()
-            drawOwl()
-            drawObstacles()
+            if (holder.surface.isValid) {
+                canvas = holder.lockCanvas()
+                draw()
+                drawOwl()
+                drawObstacles()
+                holder.unlockCanvasAndPost(canvas)
+            }
 
             // Calculate the fps this frame
             val timeThisFrame = System.currentTimeMillis() - startFrameTime
@@ -221,46 +225,36 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     }
 
     private fun drawObstacles() {
-        if (holder.surface.isValid) {
-            for (obstacle in obstacles) {
-                drawObstacle(obstacle)
-            }
-            ourHolder.unlockCanvasAndPost(canvas)
+        for (obstacle in obstacles) {
+            drawObstacle(obstacle)
         }
     }
 
     private fun drawOwl() {
-        if (holder.surface.isValid) {
-            val leftDst = (screenWidth * 0.5).toInt() - (owlWidth * 0.5).toInt()
-            val rightDst = (screenWidth * 0.5).toInt() + (owlWidth * 0.5).toInt()
-            val topDst: Int
-            val bottomDst: Int
-            if (level == Level.MIDDLE) {
-                topDst = (screenHeight * 0.5).toInt() - (owlHeight * 0.5).toInt()
-                bottomDst = (screenHeight * 0.5).toInt() + (owlHeight * 0.5).toInt()
-            } else if (level == Level.BOTTOM) {
-                topDst = screenHeight - owlHeight
-                bottomDst = screenHeight
-            } else {
-                topDst = 0
-                bottomDst = owlHeight
-            }
-
-            val fromRect1 = Rect(0, 0, owlWidth, owlHeight)
-            val toRect1 = Rect(leftDst, topDst, rightDst, bottomDst)
-            canvas!!.drawBitmap(owlBitmap, fromRect1, toRect1, paint)
+        val leftDst = (screenWidth * 0.5).toInt() - (owlWidth * 0.5).toInt()
+        val rightDst = (screenWidth * 0.5).toInt() + (owlWidth * 0.5).toInt()
+        val topDst: Int
+        val bottomDst: Int
+        if (level == Level.MIDDLE) {
+            topDst = (screenHeight * 0.5).toInt() - (owlHeight * 0.5).toInt()
+            bottomDst = (screenHeight * 0.5).toInt() + (owlHeight * 0.5).toInt()
+        } else if (level == Level.BOTTOM) {
+            topDst = screenHeight - owlHeight
+            bottomDst = screenHeight
+        } else {
+            topDst = 0
+            bottomDst = owlHeight
         }
+
+        val fromRect1 = Rect(0, 0, owlWidth, owlHeight)
+        val toRect1 = Rect(leftDst, topDst, rightDst, bottomDst)
+        canvas!!.drawBitmap(owlBitmap, fromRect1, toRect1, paint)
     }
 
     /**
      * Draw the background
      */
     private fun draw() {
-        if (ourHolder.surface.isValid) {
-
-            canvas = ourHolder.lockCanvas()
-            drawBackground(0)
-
-        }
+        drawBackground(0)
     }
 }
