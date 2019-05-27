@@ -23,9 +23,11 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     private val paint: Paint = Paint()
     private var canvas: Canvas? = null
 
-    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context )
-    private var obstacleSpeed = sharedPreferences.getString("difficulty", "500").toFloat() // Use string because there is no float-array in xml
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    // Use string because there is no float-array in xml
+    private var obstacleSpeed = sharedPreferences.getString("difficulty", "500").toFloat()
     private var backgroundSpeed = 100f
+    private val distanceBetweenObstacles = 1500
 
     private var owlBitmap: Bitmap
     private var owlWidth: Int
@@ -33,6 +35,8 @@ class SideScrollView internal constructor(internal var context: Context, var scr
 
     // Control the fps
     private var fps: Long = 60
+
+    private val possibleObstacles: Array<Obstacle>
 
     private var level = Level.MIDDLE
     private var score = 0
@@ -70,7 +74,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         val sY = 0
         val eY = 100
 
-        val possibleObstacles = arrayOf(
+        possibleObstacles = arrayOf(
             Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, obstacleSpeed, 3.0F, middle),
             Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, obstacleSpeed, 3.0F, top),
             Obstacle(this.context, screenWidth, screenHeight, "tree", sY, eY, obstacleSpeed, 1.5F, middle),
@@ -78,11 +82,9 @@ class SideScrollView internal constructor(internal var context: Context, var scr
             Obstacle(this.context, screenWidth, screenHeight, "fern", sY, eY, obstacleSpeed, 3.0F, bottom)
         )
 
-        for (i in 0..100) {
-            val obstacle =
-                possibleObstacles[(Math.floor(Math.random() * possibleObstacles.size)).toInt()].clone() as Obstacle
-            obstacle.setOffset(i * 1500)
-            obstacles.add(obstacle)
+        // Make some initial obstacles
+        for (i in 0..10) {
+            addObstacle(obstacles)
         }
     }
 
@@ -132,6 +134,17 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         running = true
         gameThread = Thread(this)
         gameThread!!.start()
+    }
+
+    private fun addObstacle(obstacles: ArrayList<Obstacle>) {
+        val obstacleIndex = (Math.floor(Math.random() * possibleObstacles.size)).toInt()
+        val obstacle = possibleObstacles[obstacleIndex].clone() as Obstacle
+        obstacle.positionX = if (obstacles.isEmpty()) screenWidth
+        else {
+            val lastObstacle = obstacles.last()
+            lastObstacle.positionX + distanceBetweenObstacles
+        }
+        obstacles.add(obstacle)
     }
 
     private fun drawBackground(position: Int) {
@@ -224,16 +237,19 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     }
 
     private fun removeOldObstacles() {
-        val temp: ArrayList<Obstacle> = ArrayList()
+        val tempObstacles: ArrayList<Obstacle> = ArrayList()
+        var needToAddObstacle = false
         obstacles.forEach { obstacle ->
             if (obstacle.positionX > (-obstacle.width)) {
-                temp.add(obstacle)
+                tempObstacles.add(obstacle)
             } else {
                 obstacle.positionX = screenWidth
                 score++
+                needToAddObstacle = true //deferred until temp is fully built up
             }
         }
-        obstacles = temp
+        if (needToAddObstacle) addObstacle(tempObstacles)
+        obstacles = tempObstacles
     }
 
     private fun drawObstacles() {
@@ -263,7 +279,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         canvas!!.drawBitmap(owlBitmap, fromRect1, toRect1, paint)
     }
 
-    public fun checkForCollisions() : Boolean {
+    public fun checkForCollisions(): Boolean {
         val leftDst = (screenWidth * 0.5).toInt() - (owlWidth * 0.5).toInt()
         val rightDst = (screenWidth * 0.5).toInt() + (owlWidth * 0.5).toInt()
         val topDst: Int
@@ -279,7 +295,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
             bottomDst = owlHeight
         }
         obstacles.forEach { obstacle ->
-            if (obstacle.isOverlapping(leftDst, rightDst, topDst, bottomDst, owlBitmap)){
+            if (obstacle.isOverlapping(leftDst, rightDst, topDst, bottomDst, owlBitmap)) {
                 return true
             }
         }
