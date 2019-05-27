@@ -60,10 +60,6 @@ class Obstacle internal constructor(
         height = bitmap.height
     }
 
-    fun setOffset(offset: Int) {
-        positionX = screenWidth + offset
-    }
-
     fun update(fps: Long) {
         positionX -= (speed / fps).toInt()
     }
@@ -73,12 +69,13 @@ class Obstacle internal constructor(
      * If they do then we call isCollisionDetected to check if any non-transparent parts overlap,
      * if they do we return true for a collision, otherwise we return false.
      */
-    fun isOverlapping(left : Int, right : Int, top : Int, bottom : Int, bitmapOther : Bitmap): Boolean {
-        if(((positionX + width) > left && positionX < right ) &&
-            (positionY < bottom && (positionY + height) > top )) {
-                if (isCollisionDetected(bitmapOther, left, top, bitmap, positionX, positionY)){
-                    return true
-                }
+    fun isOverlapping(left: Int, right: Int, top: Int, bottom: Int, bitmapOther: Bitmap): Boolean {
+        if (((positionX + width) > left && positionX < right) &&
+            (positionY < bottom && (positionY + height) > top)
+        ) {
+            if (isCollisionDetected(bitmapOther, left, top, bitmap, positionX, positionY)) {
+                return true
+            }
         }
         return false;
     }
@@ -123,10 +120,12 @@ class Obstacle internal constructor(
      * given rectangles.
      */
     private fun getCollisionBounds(rect1: Rect, rect2: Rect): Rect {
-        return Rect(Math.max(rect1.left, rect2.left),
-                    Math.max(rect1.top, rect2.top),
-                    Math.min(rect1.right, rect2.right),
-                    Math.min(rect1.bottom, rect2.bottom))
+        return Rect(
+            Math.max(rect1.left, rect2.left),
+            Math.max(rect1.top, rect2.top),
+            Math.min(rect1.right, rect2.right),
+            Math.min(rect1.bottom, rect2.bottom)
+        )
     }
 
 
