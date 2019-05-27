@@ -2,9 +2,7 @@ package nz.co.olliechick.morepork
 
 import android.content.Context
 import android.graphics.*
-import android.view.SurfaceHolder
 import android.view.SurfaceView
-import android.widget.Toast
 import java.util.ArrayList
 
 /**
@@ -34,7 +32,8 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     // Control the fps
     private var fps: Long = 60
 
-    private var level: Level = Level.MIDDLE
+    private var level = Level.MIDDLE
+    private var score = 0
 
     fun updateLevel(level: Level) {
         this.level = level
@@ -97,6 +96,8 @@ class SideScrollView internal constructor(internal var context: Context, var scr
                 draw()
                 drawOwl()
                 drawObstacles()
+                drawScore()
+                score++
                 holder.unlockCanvasAndPost(canvas)
                 if (checkForCollisions()) {
                     running = false
@@ -279,6 +280,34 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         return false
     }
 
+
+    private fun drawScore() {
+        val path = Path()
+        val text = "$score"
+        val scoreLocationX = (screenWidth * 0.075).toFloat()
+        val scoreLocationY = (screenHeight * 0.2).toFloat()
+
+        paint.apply {
+            color = Color.BLACK
+            textSize = 200F
+            style = Paint.Style.FILL
+            isAntiAlias = true
+            typeface = Typeface.DEFAULT_BOLD
+            getTextPath(text, 0, text.length, scoreLocationX, scoreLocationY, path)
+        }
+
+        val stkPaint = Paint()
+        stkPaint.apply {
+            style = Paint.Style.STROKE
+            strokeWidth = 20f
+            color = Color.WHITE
+        }
+
+        canvas!!.apply {
+            drawPath(path, stkPaint)
+            drawPath(path, paint)
+        }
+    }
 
     /**
      * Draw the background
