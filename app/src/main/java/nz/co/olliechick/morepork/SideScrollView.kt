@@ -3,7 +3,6 @@ package nz.co.olliechick.morepork
 import android.content.Context
 import android.graphics.*
 import android.view.SurfaceView
-import android.widget.Toast
 import java.util.ArrayList
 
 /**
@@ -283,12 +282,18 @@ class SideScrollView internal constructor(internal var context: Context, var scr
 
 
     private fun drawScore() {
+        val path = Path()
+        val text = "$score"
+        val scoreLocationX = (screenWidth * 0.075).toFloat()
+        val scoreLocationY = (screenHeight * 0.2).toFloat()
+
         paint.apply {
             color = Color.BLACK
             textSize = 200F
             style = Paint.Style.FILL
             isAntiAlias = true
             typeface = Typeface.DEFAULT_BOLD
+            getTextPath(text, 0, text.length, scoreLocationX, scoreLocationY, path)
         }
 
         val stkPaint = Paint()
@@ -298,14 +303,10 @@ class SideScrollView internal constructor(internal var context: Context, var scr
             color = Color.WHITE
         }
 
-        val path = Path()
-        val text = "$score"
-        paint.getTextPath(text, 0, text.length, (screenWidth * 0.075).toFloat(), (screenHeight * 0.2).toFloat(), path)
-        canvas!!.drawPath(path, stkPaint)
-        canvas!!.drawPath(path, paint)
-
-//        canvas!!.drawText("45", (screenWidth * 0.1).toFloat(), (screenHeight * 0.2).toFloat(), stkPaint)
-//        canvas!!.drawText("45", (screenWidth * 0.1).toFloat(), (screenHeight * 0.2).toFloat(), paint)
+        canvas!!.apply {
+            drawPath(path, stkPaint)
+            drawPath(path, paint)
+        }
     }
 
     /**
