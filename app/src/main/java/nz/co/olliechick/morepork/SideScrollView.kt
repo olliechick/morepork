@@ -293,7 +293,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
 
         paint.apply {
             color = Color.BLACK
-            textSize = 200F
+            textSize = 200F //todo see issue 32
             style = Paint.Style.FILL
             isAntiAlias = true
             typeface = Typeface.DEFAULT_BOLD
