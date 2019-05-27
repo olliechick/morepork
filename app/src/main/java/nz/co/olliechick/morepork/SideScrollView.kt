@@ -97,7 +97,6 @@ class SideScrollView internal constructor(internal var context: Context, var scr
                 drawOwl()
                 drawObstacles()
                 drawScore()
-                score++
                 holder.unlockCanvasAndPost(canvas)
                 if (checkForCollisions()) {
                     running = false
@@ -225,7 +224,12 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     private fun removeOldObstacles() {
         val temp: ArrayList<Obstacle> = ArrayList()
         obstacles.forEach { obstacle ->
-            if (obstacle.positionX > (-obstacle.width)) temp.add(obstacle) else obstacle.positionX = screenWidth
+            if (obstacle.positionX > (-obstacle.width)) {
+                temp.add(obstacle)
+            } else {
+                obstacle.positionX = screenWidth
+                score++
+            }
         }
         obstacles = temp
     }
