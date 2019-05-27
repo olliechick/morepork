@@ -72,7 +72,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
             Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, obstacleSpeed, 3.0F, middle),
             Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, obstacleSpeed, 3.0F, top),
             Obstacle(this.context, screenWidth, screenHeight, "tree", sY, eY, obstacleSpeed, 1.5F, middle),
-            Obstacle(this.context, screenWidth, screenHeight, "branch", sY, eY, obstacleSpeed, 3.0F, top),
+            Obstacle(this.context, screenWidth, screenHeight, "branch", sY, eY, obstacleSpeed, 2F, top),
             Obstacle(this.context, screenWidth, screenHeight, "fern", sY, eY, obstacleSpeed, 3.0F, bottom)
         )
 
