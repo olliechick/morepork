@@ -3,6 +3,7 @@ package nz.co.olliechick.morepork
 import android.content.Context
 import android.graphics.*
 import android.view.SurfaceView
+import androidx.preference.PreferenceManager
 import java.util.ArrayList
 
 /**
@@ -22,7 +23,8 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     private val paint: Paint = Paint()
     private var canvas: Canvas? = null
 
-    private var obstacleSpeed = 500f
+    val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context )
+    private var obstacleSpeed = sharedPreferences.getString("difficulty", "500").toFloat() // Use string because there is no float-array in xml
     private var backgroundSpeed = 100f
 
     private var owlBitmap: Bitmap
