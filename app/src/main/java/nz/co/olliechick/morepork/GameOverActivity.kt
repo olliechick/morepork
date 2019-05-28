@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 
 class GameOverActivity : AppCompatActivity() {
 
@@ -15,6 +16,9 @@ class GameOverActivity : AppCompatActivity() {
         // get reference to buttons
         val playButton = findViewById<Button>(R.id.play_again_button)
         val homeButton = findViewById<Button>(R.id.home_button)
+
+        val score = intent.getIntExtra("score", 0)
+        var yourScore = findViewById<TextView>(R.id.your_score_textview).setText(score.toString())
 
         // set on-click listeners
         playButton.setOnClickListener {

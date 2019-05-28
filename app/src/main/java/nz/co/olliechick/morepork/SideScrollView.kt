@@ -1,8 +1,10 @@
 package nz.co.olliechick.morepork
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.*
 import android.view.SurfaceView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.preference.PreferenceManager
 import java.util.ArrayList
 
@@ -16,7 +18,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     private var obstacles: ArrayList<Obstacle>
 
     @Volatile
-    private var running: Boolean = false
+    public var running: Boolean = true
     private var gameThread: Thread? = null
 
     // For drawing
@@ -39,7 +41,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     private val possibleObstacles: Array<Obstacle>
 
     private var level = Level.MIDDLE
-    private var score = 0
+    var score = 0
 
     fun updateLevel(level: Level) {
         this.level = level
@@ -104,6 +106,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
                 holder.unlockCanvasAndPost(canvas)
                 if (checkForCollisions()) {
                     running = false
+
                 }
             }
 

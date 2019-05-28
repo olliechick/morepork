@@ -22,5 +22,6 @@
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
+    <string name="game_over">Game Over</string>
 
 </resources>

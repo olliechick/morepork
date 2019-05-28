@@ -64,6 +64,7 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
         // Make our sideScrollView the view for the Activity
         setContentView(sideScrollView)
 
+
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -112,7 +113,11 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
                     if (soundLevel > SOUND_BARRIER) loudNoise()
                     else quietNoise()
                 }
-                handler.postDelayed(this, delay)
+                if (!sideScrollView!!.running){
+                   gameOver()
+                } else {
+                    handler.postDelayed(this, delay)
+                }
             }
         }, delay)
     }
@@ -129,6 +134,12 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
             if (event.values[0] == event.sensor.maximumRange) handRemoved()
             else handCovered()
         }
+    }
+
+    private fun gameOver(){
+        val intent = Intent(this, GameOverActivity::class.java)
+        intent.putExtra("score", sideScrollView!!.score)
+        startActivity(intent)
     }
 
 
