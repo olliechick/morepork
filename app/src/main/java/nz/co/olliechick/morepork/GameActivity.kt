@@ -104,7 +104,7 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
         }
 
         val handler = Handler()
-        val delay = (1000/CHECK_FREQUENCY).toLong() //milliseconds
+        val delay = (1000 / CHECK_FREQUENCY).toLong() //milliseconds
 
         handler.postDelayed(object : Runnable {
             override fun run() {
@@ -113,8 +113,8 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
                     if (soundLevel > SOUND_BARRIER) loudNoise()
                     else quietNoise()
                 }
-                if (!sideScrollView!!.running){
-                   gameOver()
+                if (!sideScrollView!!.running) {
+                    gameOver()
                 } else {
                     handler.postDelayed(this, delay)
                 }
@@ -136,7 +136,7 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
         }
     }
 
-    private fun gameOver(){
+    private fun gameOver() {
         val intent = Intent(this, GameOverActivity::class.java)
         intent.putExtra("score", sideScrollView!!.score)
         startActivity(intent)

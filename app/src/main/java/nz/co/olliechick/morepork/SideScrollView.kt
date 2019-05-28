@@ -252,7 +252,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
             } else {
                 obstacle.positionX = screenWidth
                 score++
-                removedAnObstacle = true //deferred until temp is fully built up
+                removedAnObstacle = true
             }
         }
         obstacles = tempObstacles
@@ -286,7 +286,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         canvas!!.drawBitmap(owlBitmap, fromRect1, toRect1, paint)
     }
 
-    public fun checkForCollisions(): Boolean {
+    private fun checkForCollisions(): Boolean {
         val leftDst = (screenWidth * 0.5).toInt() - (owlWidth * 0.5).toInt()
         val rightDst = (screenWidth * 0.5).toInt() + (owlWidth * 0.5).toInt()
         val topDst: Int

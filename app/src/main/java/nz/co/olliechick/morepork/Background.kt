@@ -5,11 +5,17 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 
 
-
 /**
  * Background image
  */
-class Background internal constructor(context: Context, screenWidth: Int, screenHeight: Int, sY: Int, eY: Int, var speed: Float) {
+class Background internal constructor(
+    context: Context,
+    screenWidth: Int,
+    screenHeight: Int,
+    sY: Int,
+    eY: Int,
+    var speed: Float
+) {
 
     internal var bitmap: Bitmap
 
@@ -33,7 +39,8 @@ class Background internal constructor(context: Context, screenWidth: Int, screen
         endY = eY * (screenHeight / 100)
 
         // Create the bitmap
-        bitmap = Bitmap.createScaledBitmap(bitmap, ((screenHeight*bitmap.width)/(bitmap.height)), screenHeight, true)
+        bitmap =
+            Bitmap.createScaledBitmap(bitmap, ((screenHeight * bitmap.width) / (bitmap.height)), screenHeight, true)
 
         // Save the width and height for later use
         width = bitmap.width
