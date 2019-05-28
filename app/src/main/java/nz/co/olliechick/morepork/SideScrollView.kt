@@ -1,10 +1,8 @@
 package nz.co.olliechick.morepork
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.*
 import android.view.SurfaceView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.preference.PreferenceManager
 import java.util.ArrayList
 
@@ -86,7 +84,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
 
         // Make some initial obstacles
         for (i in 0..10) {
-            addObstacle(obstacles)
+            addObstacle()
         }
     }
 
@@ -106,7 +104,6 @@ class SideScrollView internal constructor(internal var context: Context, var scr
                 holder.unlockCanvasAndPost(canvas)
                 if (checkForCollisions()) {
                     running = false
-
                 }
             }
 
@@ -139,7 +136,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         gameThread!!.start()
     }
 
-    private fun addObstacle(obstacles: ArrayList<Obstacle>) {
+    private fun addObstacle() {
         val obstacleIndex = (Math.floor(Math.random() * possibleObstacles.size)).toInt()
         val obstacle = possibleObstacles[obstacleIndex].clone() as Obstacle
         obstacle.positionX = if (obstacles.isEmpty()) screenWidth
@@ -233,26 +230,33 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         for (bg in backgrounds) {
             bg.update(fps)
         }
-        removeOldObstacles()
+
+        // Update obstacles
+        val removedAnObstacle = removeOldObstacles()
+        if (removedAnObstacle) addObstacle()
         for (obstacle in obstacles) {
             obstacle.update(fps)
         }
     }
 
-    private fun removeOldObstacles() {
+    /**
+     * If an obstacle has just moved off the screen, removes it and returns true.
+     * Else, returns false
+     */
+    private fun removeOldObstacles(): Boolean {
         val tempObstacles: ArrayList<Obstacle> = ArrayList()
-        var needToAddObstacle = false
+        var removedAnObstacle = false
         obstacles.forEach { obstacle ->
             if (obstacle.positionX > (-obstacle.width)) {
                 tempObstacles.add(obstacle)
             } else {
                 obstacle.positionX = screenWidth
                 score++
-                needToAddObstacle = true //deferred until temp is fully built up
+                removedAnObstacle = true //deferred until temp is fully built up
             }
         }
-        if (needToAddObstacle) addObstacle(tempObstacles)
         obstacles = tempObstacles
+        return removedAnObstacle
     }
 
     private fun drawObstacles() {
