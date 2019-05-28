@@ -140,6 +140,7 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
         val intent = Intent(this, GameOverActivity::class.java)
         intent.putExtra("score", sideScrollView!!.score)
         startActivity(intent)
+        finish()
     }
 
 

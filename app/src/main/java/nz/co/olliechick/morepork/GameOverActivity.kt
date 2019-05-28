@@ -24,10 +24,12 @@ class GameOverActivity : AppCompatActivity() {
         playButton.setOnClickListener {
             val intent = Intent(this, GameActivity::class.java)
             startActivity(intent)
+            finish()
         }
         homeButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 
