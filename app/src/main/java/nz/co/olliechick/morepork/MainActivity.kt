@@ -1,16 +1,13 @@
 package nz.co.olliechick.morepork
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri.*
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
 
 
@@ -29,20 +26,22 @@ class MainActivity : AppCompatActivity() {
 
         // set on-click listeners
         playButton.setOnClickListener {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.RECORD_AUDIO),
-                    REQUEST_RECORD_AUDIO_PERMISSION
-                )
-            } else launchGame()
+            Toast.makeText(this, "Clicked play", Toast.LENGTH_SHORT).show();
+//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+//                != PackageManager.PERMISSION_GRANTED
+//            ) {
+//                ActivityCompat.requestPermissions(
+//                    this,
+//                    arrayOf(Manifest.permission.RECORD_AUDIO),
+//                    REQUEST_RECORD_AUDIO_PERMISSION
+//                )
+//            } else launchGame()
 
         }
 
         helpButton.setOnClickListener {
-            val uri = Uri.parse(Util.helpUrl)
+            Toast.makeText(this, "Opening help...", Toast.LENGTH_SHORT).show();
+            val uri = parse(Util.helpUrl)
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
@@ -53,21 +52,21 @@ class MainActivity : AppCompatActivity() {
         displayedTheme = Util.updateTheme(PreferenceManager.getDefaultSharedPreferences(this))
     }
 
-    override fun onResume() {
-        super.onResume()
-        val currentTheme = PreferenceManager.getDefaultSharedPreferences(this).getString("theme", "")
-        if (currentTheme != displayedTheme) recreate()
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            launchGame()
-        } else {
-            Toast.makeText(this, "You will need to allow the app to record audio to play the game.", Toast.LENGTH_SHORT)
-                .show()
-        }
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        val currentTheme = PreferenceManager.getDefaultSharedPreferences(this).getString("theme", "")
+//        if (currentTheme != displayedTheme) recreate()
+//    }
+//
+//    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//            launchGame()
+//        } else {
+//            Toast.makeText(this, "You will need to allow the app to record audio to play the game.", Toast.LENGTH_SHORT)
+//                .show()
+//        }
+//    }
 
     fun launchGame() {
         val intent = Intent(this, GameActivity::class.java)
@@ -83,8 +82,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_settings -> {
-            val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
+            Toast.makeText(this, "settings :)", Toast.LENGTH_SHORT).show()
+//            val intent = Intent(this, SettingsActivity::class.java)
+//            startActivity(intent)
             true
         }
 
