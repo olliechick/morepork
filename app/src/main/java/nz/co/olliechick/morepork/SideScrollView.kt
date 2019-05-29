@@ -139,7 +139,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     private fun addObstacle() {
         val obstacleIndex = (Math.floor(Math.random() * possibleObstacles.size)).toInt()
         val obstacle = possibleObstacles[obstacleIndex].clone() as Obstacle
-        obstacle.positionX = if (obstacles.isEmpty()) screenWidth
+        obstacle.positionX = if (obstacles.isEmpty()) screenWidth * 3
         else {
             val lastObstacle = obstacles.last()
             lastObstacle.positionX + distanceBetweenObstacles
