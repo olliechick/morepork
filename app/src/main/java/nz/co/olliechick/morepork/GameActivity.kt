@@ -67,15 +67,6 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
 
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            runAnimations()
-        } else {
-            finish()
-        }
-    }
-
     override fun onResume() {
         super.onResume()
         sideScrollView?.resume()
@@ -89,18 +80,7 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
 
         mSensorManager!!.registerListener(this, mProximity, SensorManager.SENSOR_DELAY_NORMAL)
 
-        // Ask for permission to record audio, and start the sound meter
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.RECORD_AUDIO),
-                REQUEST_RECORD_AUDIO_PERMISSION
-            )
-        } else {
-            runAnimations()
-        }
+        runAnimations()
     }
 
     override fun onPause() {
