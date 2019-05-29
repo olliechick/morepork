@@ -69,12 +69,11 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        permissionToRecordAccepted = if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION) {
-            grantResults[0] == PackageManager.PERMISSION_GRANTED
+        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            runAnimations()
         } else {
-            false
+            finish()
         }
-        if (!permissionToRecordAccepted) finish()
     }
 
     override fun onResume() {
@@ -100,9 +99,26 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
                 REQUEST_RECORD_AUDIO_PERMISSION
             )
         } else {
-            soundMeter!!.start()
+            runAnimations()
         }
+    }
 
+    override fun onPause() {
+        super.onPause()
+        mSensorManager!!.unregisterListener(this)
+        soundMeter!!.stop()
+        sideScrollView?.pause()
+    }
+
+    override fun onSensorChanged(event: SensorEvent) {
+        if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
+            if (event.values[0] == event.sensor.maximumRange) handRemoved()
+            else handCovered()
+        }
+    }
+
+    private fun runAnimations() {
+        soundMeter!!.start()
         val handler = Handler()
         val delay = (1000 / CHECK_FREQUENCY).toLong() //milliseconds
 
@@ -120,20 +136,6 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
                 }
             }
         }, delay)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mSensorManager!!.unregisterListener(this)
-        soundMeter!!.stop()
-        sideScrollView?.pause()
-    }
-
-    override fun onSensorChanged(event: SensorEvent) {
-        if (event.sensor.type == Sensor.TYPE_PROXIMITY) {
-            if (event.values[0] == event.sensor.maximumRange) handRemoved()
-            else handCovered()
-        }
     }
 
     private fun gameOver() {
