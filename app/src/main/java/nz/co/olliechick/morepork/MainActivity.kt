@@ -3,13 +3,13 @@ package nz.co.olliechick.morepork
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri.*
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.preference.PreferenceManager
 
@@ -17,7 +17,6 @@ import androidx.preference.PreferenceManager
 class MainActivity : AppCompatActivity() {
 
     private val REQUEST_RECORD_AUDIO_PERMISSION = 440
-    private var displayedTheme: String = "light"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,21 +41,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         helpButton.setOnClickListener {
-            val uri = Uri.parse(Util.helpUrl)
+            val uri = parse(Util.helpUrl)
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
 
         val actionBar = supportActionBar
         actionBar?.title = getString(R.string.app_name)
-
-        displayedTheme = Util.updateTheme(PreferenceManager.getDefaultSharedPreferences(this))
     }
 
     override fun onResume() {
         super.onResume()
-        val currentTheme = PreferenceManager.getDefaultSharedPreferences(this).getString("theme", "")
-        if (currentTheme != displayedTheme) recreate()
+        Util.updateTheme(PreferenceManager.getDefaultSharedPreferences(this))
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -69,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun launchGame() {
+    private fun launchGame() {
         val intent = Intent(this, GameActivity::class.java)
         startActivity(intent)
         finish()
@@ -89,6 +85,5 @@ class MainActivity : AppCompatActivity() {
         }
 
         else -> super.onOptionsItemSelected(item)
-
     }
 }
