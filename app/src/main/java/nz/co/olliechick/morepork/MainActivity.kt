@@ -50,16 +50,13 @@ class MainActivity : AppCompatActivity() {
 
         val actionBar = supportActionBar
         actionBar?.title = getString(R.string.app_name)
-
-        displayedTheme = Util.updateTheme(PreferenceManager.getDefaultSharedPreferences(this))
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        val currentTheme = PreferenceManager.getDefaultSharedPreferences(this).getString("theme", "")
-//        if (currentTheme != displayedTheme) recreate()
-//    }
-//
+    override fun onResume() {
+        super.onResume()
+        Util.updateTheme(PreferenceManager.getDefaultSharedPreferences(this))
+    }
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
