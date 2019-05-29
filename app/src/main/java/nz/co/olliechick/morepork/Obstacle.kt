@@ -80,13 +80,6 @@ class Obstacle internal constructor(
         return false;
     }
 
-    /**
-     * Check if pixel is not transparent
-     */
-    private fun isFilled(pixel: Int): Boolean {
-        return pixel != Color.TRANSPARENT
-    }
-
 
     /**
      * Check pixel-perfectly if two views are colliding
@@ -105,7 +98,7 @@ class Obstacle internal constructor(
                 for (j in collisionBounds.top until collisionBounds.bottom step 10) {
                     val bitmap1Pixel = bitmap1!!.getPixel(i - x1, j - y1)
                     val bitmap2Pixel = bitmap2!!.getPixel(i - x2, j - y2)
-                    if (isFilled(bitmap1Pixel) && isFilled(bitmap2Pixel)) {
+                    if ((bitmap1Pixel != Color.TRANSPARENT) && (bitmap2Pixel != Color.TRANSPARENT)) {
                         return true
                     }
                 }
