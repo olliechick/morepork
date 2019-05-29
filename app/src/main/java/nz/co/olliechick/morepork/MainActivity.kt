@@ -17,7 +17,6 @@ import androidx.preference.PreferenceManager
 class MainActivity : AppCompatActivity() {
 
     private val REQUEST_RECORD_AUDIO_PERMISSION = 440
-    private var displayedTheme: String = "light"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
         // set on-click listeners
         playButton.setOnClickListener {
-            Toast.makeText(this, "Clicked play", Toast.LENGTH_SHORT).show();
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED
             ) {
@@ -67,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun launchGame() {
+    private fun launchGame() {
         val intent = Intent(this, GameActivity::class.java)
         startActivity(intent)
         finish()
@@ -87,6 +85,5 @@ class MainActivity : AppCompatActivity() {
         }
 
         else -> super.onOptionsItemSelected(item)
-
     }
 }
