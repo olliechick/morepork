@@ -74,6 +74,13 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         val sY = 0
         val eY = 100
 
+        // Get obstacle speed from prefs
+        val obstacleSpeedString = sharedPreferences.getString("difficulty", "500")
+        if (obstacleSpeedString != null) {
+            val nullableSpeed = obstacleSpeedString.toFloatOrNull()
+            if (nullableSpeed != null) obstacleSpeed = nullableSpeed
+        }
+
         possibleObstacles = arrayOf(
             Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, obstacleSpeed, 3.0F, middle),
             Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, obstacleSpeed, 3.0F, top),
@@ -82,12 +89,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
             Obstacle(this.context, screenWidth, screenHeight, "fern", sY, eY, obstacleSpeed, 3.0F, bottom)
         )
 
-        // Get obstacle speed from prefs
-        val obstacleSpeedString = sharedPreferences.getString("difficulty", "500")
-        if (obstacleSpeedString != null) {
-            val nullableSpeed = obstacleSpeedString.toFloatOrNull()
-            if (nullableSpeed != null) obstacleSpeed = nullableSpeed
-        }
+
 
         // Make some initial obstacles
         for (i in 0..10) {
