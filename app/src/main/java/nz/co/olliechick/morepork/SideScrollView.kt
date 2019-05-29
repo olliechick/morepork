@@ -25,7 +25,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
 
     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     // Use string because there is no float-array in xml
-    private var obstacleSpeed = sharedPreferences.getString("difficulty", "500").toFloat()
+    private var obstacleSpeed = 500f // default, will be replaced
     private var backgroundSpeed = 100f
     private val distanceBetweenObstacles = 1500
 
@@ -81,6 +81,13 @@ class SideScrollView internal constructor(internal var context: Context, var scr
             Obstacle(this.context, screenWidth, screenHeight, "branch", sY, eY, obstacleSpeed, 2F, top),
             Obstacle(this.context, screenWidth, screenHeight, "fern", sY, eY, obstacleSpeed, 3.0F, bottom)
         )
+
+        // Get obstacle speed from prefs
+        val obstacleSpeedString = sharedPreferences.getString("difficulty", "500")
+        if (obstacleSpeedString != null) {
+            val nullableSpeed = obstacleSpeedString.toFloatOrNull()
+            if (nullableSpeed != null) obstacleSpeed = nullableSpeed
+        }
 
         // Make some initial obstacles
         for (i in 0..10) {
