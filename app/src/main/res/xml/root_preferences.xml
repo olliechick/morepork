@@ -24,7 +24,7 @@
                 app:title="@string/difficulty"
                 app:entries="@array/difficulty_entries"
                 app:entryValues="@array/difficulty_values"
-                app:defaultValue="medium"
+                app:defaultValue="300"
                 app:useSimpleSummaryProvider="true"/>
 
         <ListPreference
