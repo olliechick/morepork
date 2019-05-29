@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
             val uri = Uri.parse(Util.helpUrl)
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
-            finish()
         }
 
         val actionBar = supportActionBar
@@ -57,7 +56,6 @@ class MainActivity : AppCompatActivity() {
         R.id.action_settings -> {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
-            finish()
             true
         }
 
