@@ -101,8 +101,8 @@ class Obstacle internal constructor(
 
         if (Rect.intersects(bounds1, bounds2)) {
             val collisionBounds = getCollisionBounds(bounds1, bounds2)
-            for (i in collisionBounds.left until collisionBounds.right) {
-                for (j in collisionBounds.top until collisionBounds.bottom) {
+            for (i in collisionBounds.left until collisionBounds.right step 10) {
+                for (j in collisionBounds.top until collisionBounds.bottom step 10) {
                     val bitmap1Pixel = bitmap1!!.getPixel(i - x1, j - y1)
                     val bitmap2Pixel = bitmap2!!.getPixel(i - x2, j - y2)
                     if (isFilled(bitmap1Pixel) && isFilled(bitmap2Pixel)) {
