@@ -77,7 +77,7 @@ class Obstacle internal constructor(
                 return true
             }
         }
-        return false;
+        return false
     }
 
 
@@ -89,15 +89,15 @@ class Obstacle internal constructor(
         bitmap2: Bitmap, x2: Int, y2: Int
     ): Boolean {
 
-        val bounds1 = Rect(x1, y1, x1 + bitmap1!!.getWidth(), y1 + bitmap1!!.getHeight())
-        val bounds2 = Rect(x2, y2, x2 + bitmap2!!.getWidth(), y2 + bitmap2!!.getHeight())
+        val bounds1 = Rect(x1, y1, x1 + bitmap1.width, y1 + bitmap1.height)
+        val bounds2 = Rect(x2, y2, x2 + bitmap2.width, y2 + bitmap2.height)
 
         if (Rect.intersects(bounds1, bounds2)) {
             val collisionBounds = getCollisionBounds(bounds1, bounds2)
             for (i in collisionBounds.left until collisionBounds.right step 10) {
                 for (j in collisionBounds.top until collisionBounds.bottom step 10) {
-                    val bitmap1Pixel = bitmap1!!.getPixel(i - x1, j - y1)
-                    val bitmap2Pixel = bitmap2!!.getPixel(i - x2, j - y2)
+                    val bitmap1Pixel = bitmap1.getPixel(i - x1, j - y1)
+                    val bitmap2Pixel = bitmap2.getPixel(i - x2, j - y2)
                     if ((bitmap1Pixel != Color.TRANSPARENT) && (bitmap2Pixel != Color.TRANSPARENT)) {
                         return true
                     }
