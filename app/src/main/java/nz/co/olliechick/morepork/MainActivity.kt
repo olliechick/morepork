@@ -3,7 +3,8 @@ package nz.co.olliechick.morepork
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri.*
+import android.content.res.Configuration.UI_MODE_NIGHT_MASK
+import android.net.Uri.parse
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -52,7 +53,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Util.updateTheme(PreferenceManager.getDefaultSharedPreferences(this))
+        val currentNightMode = resources.configuration.uiMode and UI_MODE_NIGHT_MASK
+        if (Util.updateTheme(PreferenceManager.getDefaultSharedPreferences(this), currentNightMode)) recreate()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
