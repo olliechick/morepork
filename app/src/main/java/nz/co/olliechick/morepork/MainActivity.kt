@@ -2,8 +2,8 @@ package nz.co.olliechick.morepork
 
 import android.Manifest
 import android.content.Intent
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.content.pm.PackageManager
-import android.content.res.Configuration.UI_MODE_NIGHT_MASK
 import android.net.Uri.parse
 import android.os.Bundle
 import android.view.Menu
@@ -15,13 +15,22 @@ import androidx.core.app.ActivityCompat
 import androidx.preference.PreferenceManager
 
 
-class MainActivity : AppCompatActivity() {
+open class MainActivity : AppCompatActivity() {
 
     private val REQUEST_RECORD_AUDIO_PERMISSION = 440
+    private var mApplyNightMode = false
+
+    private var listener: OnSharedPreferenceChangeListener =
+        OnSharedPreferenceChangeListener { prefs, key ->
+            if (key == "theme") mApplyNightMode = true
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(listener)
+        Util.updateTheme(PreferenceManager.getDefaultSharedPreferences(this))
 
         // get reference to buttons
         val playButton = findViewById<Button>(R.id.play_button)
@@ -53,8 +62,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val currentNightMode = resources.configuration.uiMode and UI_MODE_NIGHT_MASK
-        if (Util.updateTheme(PreferenceManager.getDefaultSharedPreferences(this), currentNightMode)) recreate()
+        if (mApplyNightMode) {
+            mApplyNightMode = false
+            recreate()
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
