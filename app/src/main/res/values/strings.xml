@@ -31,5 +31,9 @@
     <string name="share_text">I got a score of %1$d on %2$s! Can you beat it?</string>
     <string name="allow_app_audio_for_game">You will need to allow the app to record audio to play the game.</string>
     <string name="allow_app_audio_for_settings">You will need to allow the app to record audio to test your sound level.</string>
+    <string name="loading">Loading…</string>
+    <string name="current_sound_level">Current sound level</string>
+    <string name="help_url" translatable="false">https://docs.google.com/document/d/1p9o2-fDhx2gYimRF4TkAfh5I9CPeMrvjpM7GsClGvqA/edit?usp=sharing</string>
+    <string name="ok">OK</string>
 
 </resources>

@@ -26,4 +26,7 @@
     <string name="game_over">Jeu terminé</string>
     <string name="allow_app_audio_for_game">Vous devrez permettre à l\'application d\'enregistrer de l\'audio pour jouer au jeu.</string>
     <string name="allow_app_audio_for_settings">Vous devrez autoriser l\'application à enregistrer de l\'audio pour tester votre niveau sonore.</string>
+    <string name="loading">Chargement…</string>
+    <string name="current_sound_level">Niveau sonore actuel</string>
+    <string name="ok">OK</string>
 </resources>

@@ -66,9 +66,9 @@ class SettingsActivity : AppCompatActivity() {
             soundMeter?.start()
 
             alertDialog = AlertDialog.Builder(context!!).apply {
-                setTitle("Current sound level")
-                setMessage("Loading...")
-                setNegativeButton("OK") { _, _ -> soundMeter?.stop() }
+                setTitle(R.string.current_sound_level)
+                setMessage(R.string.loading)
+                setNegativeButton(R.string.ok) { _, _ -> soundMeter?.stop() }
             }.run { show() }
 
             createSoundLevelHandler(alertDialog)

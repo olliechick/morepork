@@ -41,7 +41,7 @@ open class MainActivity : AppCompatActivity() {
         }
 
         helpButton.setOnClickListener {
-            val uri = parse(Util.helpUrl)
+            val uri = parse(getString(R.string.help_url))
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
