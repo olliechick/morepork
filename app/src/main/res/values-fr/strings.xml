@@ -20,4 +20,5 @@
     <string name="hard">Difficile</string>
     <string name="sound_level_limit">Limite de niveau sonore</string>
     <string name="sound_level">Niveau sonore</string>
+    <string name="test_sound_level">Tester le niveau sonore</string>
 </resources>

@@ -50,6 +50,9 @@
                 android:min="@integer/min_sound_level"
                 android:max="@integer/max_sound_level"/>
 
+        <Preference android:title="@string/test_sound_level"
+                    android:key="testSoundLevelButton"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
