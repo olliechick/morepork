@@ -41,6 +41,8 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     private var level = Level.MIDDLE
     var score = 0
 
+    private var crashLevel = Level.MIDDLE
+
     fun updateLevel(level: Level) {
         this.level = level
     }
@@ -107,12 +109,18 @@ class SideScrollView internal constructor(internal var context: Context, var scr
             if (holder.surface.isValid) {
                 canvas = holder.lockCanvas()
                 draw()
-                drawOwl()
                 drawObstacles()
+                drawOwl(level)
                 drawScore()
                 holder.unlockCanvasAndPost(canvas)
                 if (checkForCollisions()) {
                     running = false
+                    canvas = holder.lockCanvas()
+                    draw()
+                    drawObstacles()
+                    drawOwl(crashLevel)
+                    drawScore()
+                    holder.unlockCanvasAndPost(canvas)
                 }
             }
 
@@ -274,7 +282,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         }
     }
 
-    private fun drawOwl() {
+    private fun drawOwl(level: Level) {
         val leftDst = (screenWidth * 0.5).toInt() - (owlWidth * 0.5).toInt()
         val rightDst = (screenWidth * 0.5).toInt() + (owlWidth * 0.5).toInt()
         val topDst: Int
@@ -289,7 +297,6 @@ class SideScrollView internal constructor(internal var context: Context, var scr
             topDst = 0
             bottomDst = owlHeight
         }
-
         val fromRect1 = Rect(0, 0, owlWidth, owlHeight)
         val toRect1 = Rect(leftDst, topDst, rightDst, bottomDst)
         canvas!!.drawBitmap(owlBitmap, fromRect1, toRect1, paint)
@@ -303,12 +310,15 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         if (level == Level.MIDDLE) {
             topDst = (screenHeight * 0.5).toInt() - (owlHeight * 0.5).toInt()
             bottomDst = (screenHeight * 0.5).toInt() + (owlHeight * 0.5).toInt()
+            crashLevel = Level.MIDDLE
         } else if (level == Level.BOTTOM) {
             topDst = screenHeight - owlHeight
             bottomDst = screenHeight
+            crashLevel = Level.BOTTOM
         } else {
             topDst = 0
             bottomDst = owlHeight
+            crashLevel = Level.TOP
         }
         obstacles.forEach { obstacle ->
             if (obstacle.isOverlapping(leftDst, rightDst, topDst, bottomDst, owlBitmap)) {
