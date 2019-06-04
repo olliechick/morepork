@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="default_sound_level">2000</integer>
+    <integer name="min_sound_level">1000</integer>
+    <integer name="max_sound_level">9999</integer>
+</resources>

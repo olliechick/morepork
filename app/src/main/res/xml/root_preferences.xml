@@ -15,7 +15,7 @@
   -->
 
 <androidx.preference.PreferenceScreen
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory>
 
@@ -38,13 +38,31 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        app:key="support"
-        app:title="@string/support">
+            app:title="@string/sound_level">
+
+        <SeekBarPreference
+                android:title="@string/sound_level_limit"
+                android:key="sound_level_limit"
+                android:summary="How loud the sound has to be before Porky moves up"
+                app:showSeekBarValue="true"
+                app:seekBarIncrement="100"
+                android:defaultValue="@integer/default_sound_level"
+                android:min="@integer/min_sound_level"
+                android:max="@integer/max_sound_level"/>
+
+        <Preference android:title="@string/test_sound_level"
+                    android:key="testSoundLevelButton"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            app:key="support"
+            app:title="@string/support">
 
         <Preference
-            app:key="feedback"
-            app:summary="@string/report_issues"
-            app:title="@string/send_feedback" />
+                app:key="feedback"
+                app:summary="@string/report_issues"
+                app:title="@string/send_feedback"/>
 
     </PreferenceCategory>
 
