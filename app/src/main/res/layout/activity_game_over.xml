@@ -61,23 +61,12 @@
             app:layout_constraintTop_toTopOf="@+id/guideline2" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/share_button" app:layout_constraintHorizontal_bias="0.6">
         <TextView
-                android:text="@string/high_score"
-                android:layout_width="8dp"
-                android:layout_height="match_parent" android:id="@+id/high_score_label" android:layout_weight="1"
-                android:textAlignment="center" android:textSize="24sp"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" android:id="@+id/high_score_textview" android:layout_weight="1"
-                android:textAlignment="center" android:textSize="24sp"/>
-        <TextView
-                android:text="@string/your_score"
                 android:layout_width="8dp"
                 android:layout_height="match_parent" android:id="@+id/your_score_label" android:layout_weight="1"
                 android:textAlignment="center" android:textSize="24sp"/>
         <TextView
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" android:id="@+id/your_score_textview" android:layout_weight="1"
+                android:layout_width="8dp"
+                android:layout_height="match_parent" android:id="@+id/high_score_label" android:layout_weight="1"
                 android:textAlignment="center" android:textSize="24sp"/>
     </LinearLayout>
     <Button

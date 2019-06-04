@@ -22,16 +22,16 @@ class GameOverActivity : AppCompatActivity() {
         val score = intent.getIntExtra("score", 0)
         val highScore = sharedPref.getInt(HIGH_SCORE, 0)
 
-        your_score_textview.text = score.toString()
+        your_score_label.text = getString(R.string.your_score, score)
 
         // we check if the new score is a high score and if so update high score
         if (score > highScore) {
             val editor: SharedPreferences.Editor = sharedPref.edit()
             editor.putInt(HIGH_SCORE, score)
             editor.apply()
-            high_score_textview.text = score.toString()
+            high_score_label.text = getString(R.string.high_score, score)
         } else {
-            high_score_textview.text = highScore.toString()
+            high_score_label.text = getString(R.string.high_score, highScore)
         }
 
         // set on-click listeners
