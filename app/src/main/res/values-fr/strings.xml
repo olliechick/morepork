@@ -21,4 +21,7 @@
     <string name="sound_level_limit">Limite de niveau sonore</string>
     <string name="sound_level">Niveau sonore</string>
     <string name="test_sound_level">Tester le niveau sonore</string>
+    <string name="share_text">J\'ai un score de %1$d sur le %2$s! Peux-tu le battre?</string>
+    <string name="share_score">"Partagez le score   "</string>
+    <string name="game_over">Jeu terminé</string>
 </resources>

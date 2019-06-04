@@ -22,7 +22,7 @@
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
-    <string name="game_over">Game Over</string>
+    <string name="game_over">Game over</string>
     <string name="sound_level_limit">Sound level limit</string>
     <string name="sound_level">Sound level</string>
     <string name="test_sound_level">Test sound level</string>
