@@ -8,8 +8,8 @@
     <string name="difficulty">Difficulty</string>
     <string name="home">Home</string>
     <string name="play_again">Play Again</string>
-    <string name="high_score">High score</string>
-    <string name="your_score">Your score</string>
+    <string name="high_score">High Score:</string>
+    <string name="your_score">Your Score:</string>
     <string name="settings">Settings</string>
 
     <!-- Preference Titles -->
@@ -22,7 +22,7 @@
     <string name="easy">Easy</string>
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
-    <string name="game_over">Game over</string>
+    <string name="game_over">Game Over</string>
     <string name="sound_level_limit">Sound level limit</string>
     <string name="sound_level">Sound level</string>
     <string name="test_sound_level">Test sound level</string>
