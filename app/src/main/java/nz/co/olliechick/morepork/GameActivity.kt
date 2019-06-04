@@ -18,18 +18,11 @@ import nz.co.olliechick.morepork.Util.Companion.DELAY
 
 class GameActivity : AppCompatActivity(), SensorEventListener {
 
-
     private var sideScrollView: SideScrollView? = null
-
-    private val REQUEST_RECORD_AUDIO_PERMISSION = 200
-    private val SOUND_BARRIER = 2000 // how loud it has to be to move the avatar up
-
     private var mSensorManager: SensorManager? = null
     private var mProximity: Sensor? = null
     private var soundMeter: SoundMeter? = null
-    private var permissionToRecordAccepted = false
     var level = Level.MIDDLE
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

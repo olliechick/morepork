@@ -19,7 +19,7 @@ open class MainActivity : AppCompatActivity() {
     private var mApplyNightMode = false
 
     private var listener: OnSharedPreferenceChangeListener =
-        OnSharedPreferenceChangeListener { prefs, key ->
+        OnSharedPreferenceChangeListener { _, key ->
             if (key == "theme") mApplyNightMode = true
         }
 
