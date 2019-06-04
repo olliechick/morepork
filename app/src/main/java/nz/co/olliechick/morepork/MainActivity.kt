@@ -17,7 +17,7 @@ import androidx.preference.PreferenceManager
 
 class MainActivity : AppCompatActivity() {
 
-    private val REQUEST_RECORD_AUDIO_PERMISSION = 440
+    private val REQUEST_RECORD_AUDIO_GAME_PERMISSION = 440
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,16 +29,8 @@ class MainActivity : AppCompatActivity() {
 
         // set on-click listeners
         playButton.setOnClickListener {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.RECORD_AUDIO),
-                    REQUEST_RECORD_AUDIO_PERMISSION
-                )
-            } else launchGame()
-
+            if (Util.hasAudioPermission(this)) launchGame()
+            else Util.getAudioPermission(this, REQUEST_RECORD_AUDIO_GAME_PERMISSION)
         }
 
         helpButton.setOnClickListener {
@@ -59,11 +51,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            launchGame()
-        } else {
-            Toast.makeText(this, "You will need to allow the app to record audio to play the game.", Toast.LENGTH_SHORT)
-                .show()
+        if (requestCode == REQUEST_RECORD_AUDIO_GAME_PERMISSION) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) launchGame()
+            else Toast.makeText(
+                this,
+                "You will need to allow the app to record audio to play the game.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
