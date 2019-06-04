@@ -24,5 +24,6 @@
     <string name="hard">Hard</string>
     <string name="game_over">Game Over</string>
     <string name="sound_level_limit">Sound level limit</string>
+    <string name="sound_level">Sound level</string>
 
 </resources>

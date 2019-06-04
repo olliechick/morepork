@@ -35,6 +35,11 @@
                 app:defaultValue="light"
                 app:useSimpleSummaryProvider="true"/>
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            app:title="@string/sound_level">
+
         <SeekBarPreference
                 android:title="@string/sound_level_limit"
                 android:key="sound_level_limit"
