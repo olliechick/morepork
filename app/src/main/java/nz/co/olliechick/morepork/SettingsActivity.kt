@@ -80,7 +80,7 @@ class SettingsActivity : AppCompatActivity() {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) showSoundLevelDialog()
                 else Toast.makeText(
                     activity,
-                    "You will need to allow the app to record audio to test your sound level.",
+                    R.string.allow_app_audio_for_settings,
                     Toast.LENGTH_SHORT
                 ).show()
             }

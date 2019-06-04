@@ -64,7 +64,7 @@ open class MainActivity : AppCompatActivity() {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) launchGame()
             else Toast.makeText(
                 this,
-                "You will need to allow the app to record audio to play the game.",
+                R.string.allow_app_audio_for_game,
                 Toast.LENGTH_SHORT
             ).show()
         }

@@ -51,7 +51,7 @@ class GameOverActivity : AppCompatActivity() {
             val shareIntent = ShareCompat.IntentBuilder
                 .from(this)
                 .setType("text/plain")
-                .setChooserTitle("@string/share_score")
+                .setChooserTitle(R.string.share_score)
                 .setText(getString(R.string.share_text, score, getString(R.string.app_name)) + "\n\n" +
                 getString(R.string.play_store_url))
                 .intent
