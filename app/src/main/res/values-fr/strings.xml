@@ -18,4 +18,5 @@
     <string name="easy">Facile</string>
     <string name="medium">Moyenne</string>
     <string name="hard">Difficile</string>
+    <string name="sound_level_limit">Limite de niveau sonore</string>
 </resources>
