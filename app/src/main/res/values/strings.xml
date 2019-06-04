@@ -23,5 +23,6 @@
     <string name="medium">Medium</string>
     <string name="hard">Hard</string>
     <string name="game_over">Game Over</string>
+    <string name="share_score">Share Score</string>
 
 </resources>
