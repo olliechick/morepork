@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -49,45 +48,36 @@ class SettingsActivity : AppCompatActivity() {
             initSettings()
 
             // Register alert dialog for when "Test sound level" is tapped
-            var alertDialog: AlertDialog? = null
             findPreference<Preference>("testSoundLevelButton")?.onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
                     // custom dialog
                     if (context == null) false
                     else {
-                        alertDialog = showSoundLevelDialog()
+                        if (Util.hasAudioPermission(context!!)) showSoundLevelDialog()
+                        else Util.getAudioPermission(this, REQUEST_RECORD_AUDIO_SETTINGS_PERMISSION)
                         true
                     }
                 }
         }
 
-        private fun showSoundLevelDialog(): AlertDialog? {
+        private fun showSoundLevelDialog() {
             var alertDialog: AlertDialog? = null
-            if (Util.hasAudioPermission(context!!)) {
-                soundMeter = SoundMeter()
-                soundMeter?.start()
-                Log.i("MOREPORK", "sm is $soundMeter")
+            soundMeter = SoundMeter()
+            soundMeter?.start()
 
-                alertDialog = AlertDialog.Builder(context!!).apply {
-                    setTitle("Current sound level")
-                    setMessage("Loading...")
-                    setNegativeButton("OK") { _, _ -> soundMeter?.stop() }
-                }.run { show() }
+            alertDialog = AlertDialog.Builder(context!!).apply {
+                setTitle("Current sound level")
+                setMessage("Loading...")
+                setNegativeButton("OK") { _, _ -> soundMeter?.stop() }
+            }.run { show() }
 
-                createSoundLevelHandler(alertDialog)
-
-            } else Util.getAudioPermission(this, REQUEST_RECORD_AUDIO_SETTINGS_PERMISSION)
-
-            return alertDialog
+            createSoundLevelHandler(alertDialog)
         }
 
         override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
             if (requestCode == REQUEST_RECORD_AUDIO_SETTINGS_PERMISSION) {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    val alertDialog = showSoundLevelDialog()
-                    createSoundLevelHandler(alertDialog)
-                }
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) showSoundLevelDialog()
                 else Toast.makeText(
                     activity,
                     "You will need to allow the app to record audio to test your sound level.",
@@ -101,7 +91,6 @@ class SettingsActivity : AppCompatActivity() {
             handler.postDelayed(object : Runnable {
                 override fun run() {
                     if (soundMeter != null) alertDialog?.setMessage(soundMeter!!.amplitude.toInt().toString())
-                    else Log.i("MOREPORK", "sm was $soundMeter")
                     handler.postDelayed(this, DELAY)
                 }
             }, DELAY)
