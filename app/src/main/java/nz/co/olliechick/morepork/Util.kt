@@ -12,6 +12,9 @@ class Util {
         const val helpUrl =
             "https://docs.google.com/document/d/1p9o2-fDhx2gYimRF4TkAfh5I9CPeMrvjpM7GsClGvqA/edit?usp=sharing"
 
+        const val CHECK_FREQUENCY = 10 // times per second the audio level is sampled
+        const val DELAY = (1000 / CHECK_FREQUENCY).toLong() //milliseconds
+
         /**
          * If the theme needs updating, does it.
          * If currentNightMode is different to the new theme, returns true

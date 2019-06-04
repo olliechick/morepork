@@ -13,6 +13,7 @@ import android.view.View.*
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
+import nz.co.olliechick.morepork.Util.Companion.DELAY
 
 
 class GameActivity : AppCompatActivity(), SensorEventListener {
@@ -22,7 +23,6 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
 
     private val REQUEST_RECORD_AUDIO_PERMISSION = 200
     private val SOUND_BARRIER = 2000 // how loud it has to be to move the avatar up
-    private val CHECK_FREQUENCY = 10 // times per second the audio level is sampled
 
     private var mSensorManager: SensorManager? = null
     private var mProximity: Sensor? = null
@@ -91,7 +91,6 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
     private fun runAnimations() {
         soundMeter!!.start()
         val handler = Handler()
-        val delay = (1000 / CHECK_FREQUENCY).toLong() //milliseconds
         val soundBarrier = PreferenceManager.getDefaultSharedPreferences(this)
             .getInt("sound_level_limit", 2000)
 
@@ -105,10 +104,10 @@ class GameActivity : AppCompatActivity(), SensorEventListener {
                 if (!sideScrollView!!.running) {
                     gameOver()
                 } else {
-                    handler.postDelayed(this, delay)
+                    handler.postDelayed(this, DELAY)
                 }
             }
-        }, delay)
+        }, DELAY)
     }
 
     private fun gameOver() {
