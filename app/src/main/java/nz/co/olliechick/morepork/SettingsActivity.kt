@@ -41,6 +41,8 @@ class SettingsActivity : AppCompatActivity() {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
             initSettings()
 
+            val soundMeter = SoundMeter().apply { start() }
+
             // Register alert dialog for when "Test sound level" is tapped
             var alertDialog: AlertDialog? = null
             findPreference<Preference>("testSoundLevelButton")?.onPreferenceClickListener =
@@ -51,7 +53,7 @@ class SettingsActivity : AppCompatActivity() {
                         alertDialog = AlertDialog.Builder(context!!).apply {
                             setTitle("Current sound level")
                             setMessage("Loading...")
-                            setNegativeButton("OK", null)
+                            setNegativeButton("OK") { _, _ -> soundMeter.stop() }
                         }.run { show() }
                         true
                     }
@@ -59,7 +61,6 @@ class SettingsActivity : AppCompatActivity() {
 
             // Create handler for updating sound level
             val handler = Handler()
-            val soundMeter = SoundMeter().apply { start() }
             handler.postDelayed(object : Runnable {
                 override fun run() {
                     alertDialog?.setMessage(soundMeter.amplitude.toInt().toString())
