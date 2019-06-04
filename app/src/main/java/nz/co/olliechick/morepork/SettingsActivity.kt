@@ -4,10 +4,13 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
+import nz.co.olliechick.morepork.Util.Companion.DELAY
 
 
 class SettingsActivity : AppCompatActivity() {
@@ -37,6 +40,32 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
             initSettings()
+
+            // Register alert dialog for when "Test sound level" is tapped
+            var alertDialog: AlertDialog? = null
+            findPreference<Preference>("testSoundLevelButton")?.onPreferenceClickListener =
+                Preference.OnPreferenceClickListener {
+                    // custom dialog
+                    if (context == null) false
+                    else {
+                        alertDialog = AlertDialog.Builder(context!!).apply {
+                            setTitle("Current sound level")
+                            setMessage("Loading...")
+                            setNegativeButton("OK", null)
+                        }.run { show() }
+                        true
+                    }
+                }
+
+            // Create handler for updating sound level
+            val handler = Handler()
+            val soundMeter = SoundMeter().apply { start() }
+            handler.postDelayed(object : Runnable {
+                override fun run() {
+                    alertDialog?.setMessage(soundMeter.amplitude.toInt().toString())
+                    handler.postDelayed(this, DELAY)
+                }
+            }, DELAY)
         }
 
         private fun initSettings() {
