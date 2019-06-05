@@ -26,7 +26,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     // Use string because there is no float-array in xml
     private var obstacleSpeed = 500f // default, will be replaced
-    private var backgroundSpeed = 100f
+    private var backgroundSpeed = 100f // default, will be replaced
     private val distanceBetweenObstacles = 1500
 
     private var owlBitmap: Bitmap
@@ -70,9 +70,6 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         owlWidth = owlBitmap.width
         owlHeight = owlBitmap.height
 
-
-        backgrounds.add(Background(this.context, screenWidth, screenHeight, 0, 110, backgroundSpeed))
-
         val sY = 0
         val eY = 100
 
@@ -82,6 +79,9 @@ class SideScrollView internal constructor(internal var context: Context, var scr
             val nullableSpeed = obstacleSpeedString.toFloatOrNull()
             if (nullableSpeed != null) obstacleSpeed = nullableSpeed
         }
+        backgroundSpeed = obstacleSpeed / 5
+
+        backgrounds.add(Background(this.context, screenWidth, screenHeight, 0, 110, backgroundSpeed))
 
         possibleObstacles = arrayOf(
             Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, obstacleSpeed, 3.0F, middle),
@@ -90,7 +90,6 @@ class SideScrollView internal constructor(internal var context: Context, var scr
             Obstacle(this.context, screenWidth, screenHeight, "branch", sY, eY, obstacleSpeed, 2F, top),
             Obstacle(this.context, screenWidth, screenHeight, "fern", sY, eY, obstacleSpeed, 3.0F, bottom)
         )
-
 
 
         // Make some initial obstacles
