@@ -16,7 +16,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     private var obstacles: ArrayList<Obstacle>
 
     @Volatile
-    public var running: Boolean = true
+    var running: Boolean = true
     private var gameThread: Thread? = null
 
     // For drawing
@@ -36,7 +36,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     // Control the fps
     private var fps: Long = 60
 
-    private val possibleObstacles: Array<Obstacle>
+    private val obstacleTypes: Array<Array<Obstacle>>
 
     private var level = Level.MIDDLE
     var score = 0.0
@@ -86,12 +86,14 @@ class SideScrollView internal constructor(internal var context: Context, var scr
 
         backgrounds.add(Background(this.context, screenWidth, screenHeight, 0, 110, backgroundSpeed))
 
-        possibleObstacles = arrayOf(
-            Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, obstacleSpeed, 3.0F, middle),
-            Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, obstacleSpeed, 3.0F, top),
-            Obstacle(this.context, screenWidth, screenHeight, "tree", sY, eY, obstacleSpeed, 1.5F, middle),
-            Obstacle(this.context, screenWidth, screenHeight, "branch", sY, eY, obstacleSpeed, 2F, top),
-            Obstacle(this.context, screenWidth, screenHeight, "fern", sY, eY, obstacleSpeed, 3.0F, bottom)
+        obstacleTypes = arrayOf(
+            arrayOf(
+                Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, obstacleSpeed, 3.0F, middle),
+                Obstacle(this.context, screenWidth, screenHeight, "drone", sY, eY, obstacleSpeed, 3.0F, top)
+            ),
+            arrayOf(Obstacle(this.context, screenWidth, screenHeight, "tree", sY, eY, obstacleSpeed, 1.5F, middle)),
+            arrayOf(Obstacle(this.context, screenWidth, screenHeight, "branch", sY, eY, obstacleSpeed, 2F, top)),
+            arrayOf(Obstacle(this.context, screenWidth, screenHeight, "fern", sY, eY, obstacleSpeed, 3.0F, bottom))
         )
 
 
@@ -155,9 +157,14 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         gameThread!!.start()
     }
 
-    private fun addObstacle() {
+    private fun generateRandomObstacle(): Obstacle {
+        val possibleObstacles = obstacleTypes[(Math.floor(Math.random() * obstacleTypes.size)).toInt()]
         val obstacleIndex = (Math.floor(Math.random() * possibleObstacles.size)).toInt()
-        val obstacle = possibleObstacles[obstacleIndex].clone() as Obstacle
+        return possibleObstacles[obstacleIndex].clone() as Obstacle
+    }
+
+    private fun addObstacle() {
+        val obstacle = generateRandomObstacle()
         obstacle.positionX = if (obstacles.isEmpty()) screenWidth * 3
         else {
             val lastObstacle = obstacles.last()
