@@ -54,7 +54,7 @@ class GameOverActivity : AppCompatActivity() {
                 .setType("text/plain")
                 .setChooserTitle(R.string.share_score)
                 .setText(
-                    getString(R.string.share_text, score, getString(R.string.app_name)) + "\n\n" +
+                    getString(R.string.share_text, Util.getStringFromDouble(score), getString(R.string.app_name)) + "\n\n" +
                             getString(R.string.play_store_url)
                 )
                 .intent
