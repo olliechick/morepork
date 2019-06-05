@@ -337,9 +337,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
 
     private fun drawScore() {
         val path = Path()
-        var text: String = ""
-        if (score.rem(1.0) == 0.0) text = "${score.toInt()}"
-        else text = "$score"
+        val text = Util.getStringFromDouble(score)
         val scoreLocationX = (screenWidth * 0.075).toFloat()
         val scoreLocationY = (screenHeight * 0.25).toFloat()
 

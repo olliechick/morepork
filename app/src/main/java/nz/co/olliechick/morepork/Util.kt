@@ -44,6 +44,11 @@ class Util {
             context.requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), requestCode)
         }
 
+        fun getStringFromDouble(double: Double): String {
+            return if (double.rem(1.0) == 0.0) "${double.toInt()}"
+            else "$double"
+        }
+
 
     }
 }

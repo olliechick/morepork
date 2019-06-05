@@ -19,20 +19,21 @@ class GameOverActivity : AppCompatActivity() {
 
         val sharedPref: SharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-        val score = intent.getIntExtra("score", 0)
-        val highScore = sharedPref.getInt(HIGH_SCORE, 0)
+        val score = intent.getDoubleExtra("score", 0.0)
+        val highScore = java.lang.Double.longBitsToDouble(sharedPref.getLong(HIGH_SCORE, 0))
 
-        your_score_label.text = getString(R.string.your_score, score)
+        your_score_label.text = getString(R.string.your_score, Util.getStringFromDouble(score))
 
         // we check if the new score is a high score and if so update high score
         if (score > highScore) {
             val editor: SharedPreferences.Editor = sharedPref.edit()
-            editor.putInt(HIGH_SCORE, score)
+            editor.putLong(HIGH_SCORE, java.lang.Double.doubleToRawLongBits(score))
             editor.apply()
-            high_score_label.text = getString(R.string.high_score, score)
+            high_score_label.text = getString(R.string.high_score, Util.getStringFromDouble(score))
         } else {
-            high_score_label.text = getString(R.string.high_score, highScore)
+            high_score_label.text = getString(R.string.high_score, Util.getStringFromDouble(highScore))
         }
+
 
         // set on-click listeners
         play_again_button.setOnClickListener {
@@ -52,8 +53,10 @@ class GameOverActivity : AppCompatActivity() {
                 .from(this)
                 .setType("text/plain")
                 .setChooserTitle(R.string.share_score)
-                .setText(getString(R.string.share_text, score, getString(R.string.app_name)) + "\n\n" +
-                getString(R.string.play_store_url))
+                .setText(
+                    getString(R.string.share_text, score, getString(R.string.app_name)) + "\n\n" +
+                            getString(R.string.play_store_url)
+                )
                 .intent
 
             if (shareIntent.resolveActivity(this.packageManager) != null) {

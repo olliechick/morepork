@@ -8,8 +8,8 @@
     <string name="difficulty">Difficulty</string>
     <string name="home">Home</string>
     <string name="play_again">Play Again</string>
-    <string name="high_score">High Score: %1$d</string>
-    <string name="your_score">Your Score: %1$d</string>
+    <string name="high_score">High Score: %1$s</string>
+    <string name="your_score">Your Score: %1$s</string>
     <string name="settings">Settings</string>
 
     <!-- Preference Titles -->

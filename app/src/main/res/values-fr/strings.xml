@@ -13,8 +13,8 @@
     <string name="difficulty">Difficulté</string>
     <string name="home">Écran d\'accueil</string>
     <string name="play_again">Rejouez</string>
-    <string name="high_score">Score élevé: %1$d</string>
-    <string name="your_score">Votre score: %1$d</string>
+    <string name="high_score">Score élevé: %1$s</string>
+    <string name="your_score">Votre score: %1$s</string>
     <string name="easy">Facile</string>
     <string name="medium">Moyenne</string>
     <string name="hard">Difficile</string>
