@@ -29,4 +29,5 @@
     <string name="loading">Chargement…</string>
     <string name="current_sound_level">Niveau sonore actuel</string>
     <string name="ok">OK</string>
+    <string name="how_loud">"Quel doit être le son avant que Porky monte "</string>
 </resources>

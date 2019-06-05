@@ -43,7 +43,7 @@
         <SeekBarPreference
                 android:title="@string/sound_level_limit"
                 android:key="sound_level_limit"
-                android:summary="How loud the sound has to be before Porky moves up"
+                android:summary="@string/how_loud"
                 app:showSeekBarValue="true"
                 app:seekBarIncrement="100"
                 android:defaultValue="@integer/default_sound_level"

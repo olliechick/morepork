@@ -10,8 +10,8 @@ android {
         applicationId "nz.co.olliechick.morepork"
         minSdkVersion 28
         targetSdkVersion 28
-        versionCode 21
-        versionName "1.0"
+        versionCode 22
+        versionName "1.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
