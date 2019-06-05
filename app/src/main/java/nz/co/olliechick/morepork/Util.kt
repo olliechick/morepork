@@ -45,8 +45,7 @@ class Util {
         }
 
         fun getStringFromDouble(double: Double): String {
-            return if (double.rem(1.0) == 0.0) "${double.toInt()}"
-            else "$double"
+            return double.toString().removeSuffix(".0")
         }
 
 
