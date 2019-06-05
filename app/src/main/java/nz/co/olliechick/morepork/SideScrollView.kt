@@ -39,7 +39,10 @@ class SideScrollView internal constructor(internal var context: Context, var scr
     private val possibleObstacles: Array<Obstacle>
 
     private var level = Level.MIDDLE
-    var score = 0
+    var score = 0.0
+    val SCORE_EASY_INCREMENT = 1.0
+    val SCORE_MEDIUM_INCREMENT = 1.5
+    val SCORE_HARD_INCREMENT = 2.0
 
     private var crashLevel = Level.MIDDLE
 
@@ -267,7 +270,11 @@ class SideScrollView internal constructor(internal var context: Context, var scr
                 tempObstacles.add(obstacle)
             } else {
                 obstacle.positionX = screenWidth
-                score++
+                when (sharedPreferences.getString("difficulty", "500")) {
+                    "300" -> score += SCORE_EASY_INCREMENT
+                    "500" -> score += SCORE_MEDIUM_INCREMENT
+                    "700" -> score += SCORE_HARD_INCREMENT
+                }
                 removedAnObstacle = true
             }
         }
@@ -330,7 +337,9 @@ class SideScrollView internal constructor(internal var context: Context, var scr
 
     private fun drawScore() {
         val path = Path()
-        val text = "$score"
+        var text: String = ""
+        if (score.rem(1.0) == 0.0) text = "${score.toInt()}"
+        else text = "$score"
         val scoreLocationX = (screenWidth * 0.075).toFloat()
         val scoreLocationY = (screenHeight * 0.25).toFloat()
 
