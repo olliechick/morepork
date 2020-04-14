@@ -77,7 +77,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
         val eY = 100
 
         // Get obstacle speed from prefs
-        val obstacleSpeedString = sharedPreferences.getString("difficulty", "500")
+        val obstacleSpeedString = sharedPreferences.getString("difficulty", "300")
         if (obstacleSpeedString != null) {
             val nullableSpeed = obstacleSpeedString.toFloatOrNull()
             if (nullableSpeed != null) obstacleSpeed = nullableSpeed
@@ -277,7 +277,7 @@ class SideScrollView internal constructor(internal var context: Context, var scr
                 tempObstacles.add(obstacle)
             } else {
                 obstacle.positionX = screenWidth
-                when (sharedPreferences.getString("difficulty", "500")) {
+                when (sharedPreferences.getString("difficulty", "300")) {
                     "300" -> score += SCORE_EASY_INCREMENT
                     "500" -> score += SCORE_MEDIUM_INCREMENT
                     "700" -> score += SCORE_HARD_INCREMENT
